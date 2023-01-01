@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Player.png" type="Texture" id=1]
+[ext_resource path="res://Test_script.gd" type="Script" id=2]
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" type="KinematicBody2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="PlayerSprite" type="Sprite" parent="Player"]
+position = Vector2( 454, 308 )
+texture = ExtResource( 1 )
