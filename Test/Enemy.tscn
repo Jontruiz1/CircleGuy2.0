@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://fp1fu63hegfu"]
+
+[ext_resource type="Script" path="res://Enemy.gd" id="1_bnnhf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ix4s6"]
+resource_local_to_scene = true
+albedo_color = Color(1, 0.219608, 0.14902, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_bapcp"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ix4s6")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_f2sau"]
+radius = 0.669093
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_bnnhf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_bapcp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_f2sau")
