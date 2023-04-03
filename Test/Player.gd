@@ -52,9 +52,8 @@ func process_move(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-		
 
-func _physics_process(delta):
+func process_collision():
 	var collideCount = get_slide_collision_count()
 	if collideCount>1 and iFrame.is_stopped():
 		var collision = get_slide_collision(collideCount-1)
@@ -64,6 +63,9 @@ func _physics_process(delta):
 			iFrame.start()
 			print(health)
 	
+
+func _physics_process(delta):
+	process_collision()
 	process_move(delta)
 	process_shoot()
 	move_and_slide()

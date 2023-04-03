@@ -11,7 +11,7 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_ix4s6")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_f2sau"]
-radius = 0.669093
+radius = 0.549929
 
 [node name="Enemy" type="CharacterBody3D"]
 script = ExtResource("1_bnnhf")

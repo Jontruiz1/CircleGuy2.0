@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Player.gd" id="1_4o1yd"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_figho"]
-radius = 0.539543
+radius = 0.519702
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vkgkl"]
 albedo_color = Color(0.984314, 0.831373, 0.113725, 1)
