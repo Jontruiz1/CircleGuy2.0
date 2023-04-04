@@ -6,4 +6,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	self.position = Vector3(player.position.x, self.position.y, player.position.z+5)
+	self.position = Vector3(player.position.x, 6, player.position.z+8)

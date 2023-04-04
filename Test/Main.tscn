@@ -5,9 +5,10 @@
 [ext_resource type="Script" path="res://Camera3D.gd" id="2_5dnh2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rl20v"]
-size = Vector3(10.1528, 0.535465, 10.155)
+size = Vector3(26.3246, 0.535465, 19.3088)
 
 [sub_resource type="BoxMesh" id="BoxMesh_b8n83"]
+size = Vector3(2.6, 1, 1.9)
 
 [node name="GameManager" type="Node3D"]
 script = ExtResource("1_h04rx")
@@ -19,7 +20,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.138974, -0.149954, 0)
 shape = SubResource("BoxShape3D_rl20v")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(10, 0, 0, 0, 0.25, 0, 0, 0, 10, 0, 0, 0)
+transform = Transform3D(10, 0, 0, 0, 0.25, 0, 0, 0, 10, -0.239724, 0, -0.0383506)
 mesh = SubResource("BoxMesh_b8n83")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -29,5 +30,9 @@ transform = Transform3D(1, 0, 0, 0, 0.950943, 0.309366, 0, -0.309366, 0.950943, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.923919, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.912163, 0.409828, 0, -0.409828, 0.912163, 0, 3.30827, 4.9257)
+transform = Transform3D(1, 0, 0, 0, 0.912163, 0.409828, 0, -0.409828, 0.912163, 0, 8.42707, 9.745)
+fov = 118.782
 script = ExtResource("2_5dnh2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3994, -0.196556, 9.12108)

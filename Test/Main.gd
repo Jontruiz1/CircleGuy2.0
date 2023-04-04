@@ -10,7 +10,7 @@ var enemyTypes = {
 }
 var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.BLACK]
 var powerUps = []
-var wave = 1
+var wave = 3
 var enemyCount = 0
 var player
 var rng
@@ -23,10 +23,17 @@ func _ready():
 	spawnWave()
 
 func spawnWave():
-	for n in range(wave+3):
+	for n in range(wave*3):
+		var enemy_x = rng.randf_range(-12, 12)
+		var enemy_z = rng.randf_range(-9, 9)
+		
+		while(pow((enemy_x - player.position.x), 2) + pow((enemy_z - player.position.z), 2) < pow(6, 2)):
+			enemy_x = rng.randf_range(-12, 12)
+			enemy_z = rng.randf_range(-9, 9) 
+		
 		var enemyColor = enemyColors[rng.randf_range(0, wave)]
 		var enemy = preload("res://Enemy.tscn").instantiate()
-		enemy.position = Vector3(n, .6, 0)
+		enemy.position = Vector3(enemy_x, .6, enemy_z)
 		enemy.init(enemyTypes[enemyColor][0], enemyTypes[enemyColor][1], enemyTypes[enemyColor][2], enemyTypes[enemyColor][3], enemyColor, player)
 		add_child(enemy)
 		enemyCount += 1
