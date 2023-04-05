@@ -55,14 +55,10 @@ func process_move(delta):
 
 func process_collision():
 	var collideCount = get_slide_collision_count()
-	if collideCount>1 and iFrame.is_stopped():
-		var collision = get_slide_collision(collideCount-1)
-		var obj = collision.get_collider(0)
-		if(obj.get_instance_id() != 27984397473):
-			health -= obj.damage
-			iFrame.start()
-			print(health)
-	
+	print( collideCount)
+	for i in range(collideCount):
+		print(get_slide_collision(i).get_collider().to_string())
+	print('\n')
 
 func _physics_process(delta):
 	process_collision()
