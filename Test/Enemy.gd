@@ -24,14 +24,28 @@ func init(hp, spd, dmg, shoot, color, player):
 	
 	match colorMatches[type]:
 		&"Purple":
-			shoot_cooldown.wait_time = 1
-			print("help")
-			
+			shoot_cooldown.wait_time = 2
+		&"Black":
+			shoot_cooldown.wait_time = .5
+	shoot_cooldown.one_shot = true
+	add_child(shoot_cooldown)
+	
+# process the shooting if possible
+func shoot():
+	if can_shoot and shoot_cooldown.is_stopped():
+		var bullet = preload("res://Bullet.tscn").instantiate()
+		
+		var tempFix = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
+		
+		# pllace the bullet at the correct starting position
+		bullet.init(self.position, tempFix, 3, damage-2)
+		get_tree().get_root().add_child(bullet)
+		shoot_cooldown.start()
 
 func _physics_process(delta):
-	if health == 0: 
+	if health <= 0: 
 		get_tree().get_root().get_node("GameManager").enemyCount -= 1
 		self.queue_free()
-	if can_shoot and shoot_cooldown.is_stopped():
-		print("yes")
+	
+	shoot()
 	self.position = self.position.move_toward(target.position, delta * speed)

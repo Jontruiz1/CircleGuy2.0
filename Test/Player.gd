@@ -55,10 +55,11 @@ func process_move(delta):
 
 func process_collision():
 	var collideCount = get_slide_collision_count()
-	print( collideCount)
+	
+	"print( collideCount)
 	for i in range(collideCount):
 		print(get_slide_collision(i).get_collider().to_string())
-	print('\n')
+	print('\n')"
 
 func _physics_process(delta):
 	process_collision()

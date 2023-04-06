@@ -2,15 +2,15 @@ extends Node3D
 
 # health, speed, damage, shoot
 var enemyTypes = {
-	Color.RED : [2, 2, 2, false], 
-	Color.BLUE : [3, 3, 3, false], 
-	Color.GREEN : [2, 4, 2, false], 
+	Color.RED : [2, 0, 2, false], 
+	Color.BLUE : [3, 0, 3, false], 
+	Color.GREEN : [2, 0, 2, false], 
 	Color.PURPLE : [4, 1, 4, true],
 	Color.BLACK : [6, 0, 3, true]
 }
 var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.BLACK]
 var powerUps = []
-var wave = 1
+var wave = 4
 var enemyCount = 0
 var player
 var rng
@@ -26,15 +26,13 @@ func _ready():
 func spawnWave():
 	for n in range(wave*3):
 		var enemyVariety
-		if wave >= enemyColors.size():
-			enemyVariety = rng.randf_range(0, enemyColors.size())
-		else:
-			enemyVariety = rng.randf_range(0, wave)
-			
+		if wave >= enemyColors.size(): enemyVariety = rng.randf_range(0, enemyColors.size()-1)
+		else: enemyVariety = rng.randf_range(0, wave)
+		
 		var enemy_x = rng.randf_range(-12, 12)
 		var enemy_z = rng.randf_range(-9, 9)
 		
-		while(pow((enemy_x - player.position.x), 2) + pow((enemy_z - player.position.z), 2) < pow(6, 2)):
+		while(pow((enemy_x - player.position.x), 2) + pow((enemy_z - player.position.z), 2) < pow(7, 2)):
 			enemy_x = rng.randf_range(-12, 12)
 			enemy_z = rng.randf_range(-9, 9) 
 		
@@ -48,8 +46,7 @@ func spawnWave():
 func _input(event):
 	if event.is_action_pressed("pause"):
 		get_tree().paused = not get_tree().paused
-		print('help')
-
+		
 func _process(delta):
 	if(enemyCount == 0):
 		wave += 1
