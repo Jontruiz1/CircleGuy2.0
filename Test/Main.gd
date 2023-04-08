@@ -10,14 +10,14 @@ var enemyTypes = {
 }
 var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.BLACK]
 var powerUps = []
-var wave = 4
+var wave = 1
 var enemyCount = 0
 var player
 var rng
+var camera
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	rng = RandomNumberGenerator.new()
 	rng.seed = hash(Time.get_time_string_from_system())
 	player = get_child(2)
@@ -45,9 +45,11 @@ func spawnWave():
 		
 func _input(event):
 	if event.is_action_pressed("pause"):
-		get_tree().paused = not get_tree().paused
-		
-func _process(delta):
+		get_tree().paused = not (get_tree().paused)
+
+
+
+func _process(_delta):
 	if(enemyCount == 0):
 		wave += 1
 		spawnWave()

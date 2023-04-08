@@ -34,5 +34,10 @@ transform = Transform3D(1, 0, 0, 0, 0.644377, 0.764708, 0, -0.764708, 0.644377, 
 fov = 118.782
 script = ExtResource("2_5dnh2")
 
+[node name="Health Text" type="Label" parent="Camera3D"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Health: "
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3994, -0.196556, 9.12108)

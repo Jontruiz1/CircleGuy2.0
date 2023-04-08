@@ -10,7 +10,6 @@ var target = null
 var shoot_cooldown = Timer.new()
 var colorMatches = {Color.RED : "Red", Color.BLUE : "Blue", Color.GREEN : "Green", Color.PURPLE : "Purple", Color.BLACK : "Black"}
 
-
 func init(hp, spd, dmg, shoot, color, player):
 	health = hp
 	speed = spd
@@ -39,7 +38,7 @@ func process_move():
 		var tempFix = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
 		
 		# place the bullet at the correct starting position
-		bullet.init(self.position, tempFix, 3, damage-2)
+		bullet.init(self, self.position, tempFix, 3, damage-2)
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
 

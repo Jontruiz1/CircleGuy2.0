@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody3D
 
 
@@ -7,6 +8,7 @@ var shoot_cooldown = Timer.new()
 var iFrame = Timer.new()
 var health = 6
 var damage = 1
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -32,7 +34,7 @@ func process_shoot():
 		var bullet = preload("res://Bullet.tscn").instantiate()
 		
 		#initialize bullet, add to tree start shoot cooldown
-		bullet.init(self.position, shoot_input, bullet_speed, damage)
+		bullet.init(self ,self.position, shoot_input, bullet_speed, damage)
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
 
