@@ -31,7 +31,7 @@ func process_shoot():
 		# load and instantiate the bullet
 		var bullet = preload("res://Bullet.tscn").instantiate()
 		
-		# pllace the bullet at the correct starting position
+		#initialize bullet, add to tree start shoot cooldown
 		bullet.init(self.position, shoot_input, bullet_speed, damage)
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
@@ -53,6 +53,7 @@ func process_move(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
+# will handle colliding with enemies
 func process_collision():
 	var collideCount = get_slide_collision_count()
 	
@@ -62,7 +63,7 @@ func process_collision():
 	print('\n')"
 
 func _physics_process(delta):
-	process_collision()
+	#process_collision()
 	process_move(delta)
 	process_shoot()
 	move_and_slide()

@@ -1,11 +1,12 @@
+class_name Enemy
 extends CharacterBody3D
 
-var health
-var speed
-var damage
-var can_shoot
-var type
-var target
+var health = null
+var speed = null
+var damage = null
+var can_shoot = null
+var type = null
+var target = null
 var shoot_cooldown = Timer.new()
 var colorMatches = {Color.RED : "Red", Color.BLUE : "Blue", Color.GREEN : "Green", Color.PURPLE : "Purple", Color.BLACK : "Black"}
 
@@ -31,13 +32,13 @@ func init(hp, spd, dmg, shoot, color, player):
 	add_child(shoot_cooldown)
 	
 # process the shooting if possible
-func shoot():
+func process_move():
 	if can_shoot and shoot_cooldown.is_stopped():
 		var bullet = preload("res://Bullet.tscn").instantiate()
 		
 		var tempFix = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
 		
-		# pllace the bullet at the correct starting position
+		# place the bullet at the correct starting position
 		bullet.init(self.position, tempFix, 3, damage-2)
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
@@ -47,5 +48,5 @@ func _physics_process(delta):
 		get_tree().get_root().get_node("GameManager").enemyCount -= 1
 		self.queue_free()
 	
-	shoot()
+	process_move()
 	self.position = self.position.move_toward(target.position, delta * speed)

@@ -2,9 +2,9 @@ extends Node3D
 
 # health, speed, damage, shoot
 var enemyTypes = {
-	Color.RED : [2, 0, 2, false], 
-	Color.BLUE : [3, 0, 3, false], 
-	Color.GREEN : [2, 0, 2, false], 
+	Color.RED : [2, 2, 2, false], 
+	Color.BLUE : [3, 2, 3, false], 
+	Color.GREEN : [2, 3, 2, false], 
 	Color.PURPLE : [4, 1, 4, true],
 	Color.BLACK : [6, 0, 3, true]
 }
