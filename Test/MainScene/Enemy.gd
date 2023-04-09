@@ -33,7 +33,7 @@ func init(hp, spd, dmg, shoot, color, player):
 # process the shooting if possible
 func process_move():
 	if can_shoot and shoot_cooldown.is_stopped():
-		var bullet = preload("res://Bullet.tscn").instantiate()
+		var bullet = preload("res://MainScene/Bullet.tscn").instantiate()
 		
 		var tempFix = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
 		

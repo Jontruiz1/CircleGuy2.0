@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bidkkv40fhljf"]
+[gd_scene load_steps=5 format=3 uid="uid://dwipgp8vfg4ky"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_4o1yd"]
+[ext_resource type="Script" path="res://MainScene/Player.gd" id="1_m55gv"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_figho"]
 radius = 0.519702
@@ -13,7 +13,7 @@ metallic = 1.0
 material = SubResource("StandardMaterial3D_vkgkl")
 
 [node name="Player" type="CharacterBody3D"]
-script = ExtResource("1_4o1yd")
+script = ExtResource("1_m55gv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_figho")

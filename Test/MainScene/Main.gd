@@ -37,7 +37,7 @@ func spawnWave():
 			enemy_z = rng.randf_range(-9, 9) 
 		
 		var enemyColor = enemyColors[enemyVariety]
-		var enemy = preload("res://Enemy.tscn").instantiate()
+		var enemy = preload("res://MainScene/Enemy.tscn").instantiate()
 		enemy.position = Vector3(enemy_x, .6, enemy_z)
 		enemy.init(enemyTypes[enemyColor][0], enemyTypes[enemyColor][1], enemyTypes[enemyColor][2], enemyTypes[enemyColor][3], enemyColor, player)
 		add_child(enemy)

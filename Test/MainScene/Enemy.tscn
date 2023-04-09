@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://fp1fu63hegfu"]
+[gd_scene load_steps=5 format=3 uid="uid://bprj8mlrp3sck"]
 
-[ext_resource type="Script" path="res://Enemy.gd" id="1_bnnhf"]
+[ext_resource type="Script" path="res://MainScene/Enemy.gd" id="1_t88ca"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ix4s6"]
 resource_local_to_scene = true
@@ -14,7 +14,7 @@ material = SubResource("StandardMaterial3D_ix4s6")
 radius = 0.549929
 
 [node name="Enemy" type="CharacterBody3D"]
-script = ExtResource("1_bnnhf")
+script = ExtResource("1_t88ca")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_bapcp")

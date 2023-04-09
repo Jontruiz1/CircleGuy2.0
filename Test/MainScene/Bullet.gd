@@ -8,7 +8,6 @@ var damage = null
 var t = Timer.new()
 var target = null
 var source = null
-signal changed(new_value)
 
 #initialize the bullet
 func init(src, playerpos, shoot_input, spd, dmg):
@@ -34,23 +33,28 @@ func _ready():
 # if the bullet collides with a wall, it should just disappear
 func process_collision():
 	var collideCount = get_slide_collision_count()
+	
 	if collideCount >= 1:
 		var collision = get_slide_collision(collideCount-1)
 		var collider = collision.get_collider()
+		print(collider)
+		var collideName = collider.name
+		collideName = collideName.replace("@", "").rstrip("0123456789")
 		
-		var collideName = collider.name.replace("@", "").rstrip("0123456789")
 		if(source != collideName):
 			match collideName:
 				"Player":
-					collider.health -= self.damage
-					changed.emit(collider.health)
-					queue_free()
+					if(collider.iFrame.is_stopped()):
+						collider.health -= self.damage
+						queue_free()
 				"Enemy":
 					collider.health -= self.damage
 					queue_free()
+				"Wall":
+					queue_free()
 				null:
 					print("idk why it's null but it is")
-				
+
 func process_move(delta):
 	self.position = Vector3(self.position.x + (delta * shoot_direction.x) * speed , self.position.y + (delta*shoot_direction.y) * speed, self.position.z + (delta * shoot_direction.z) * speed)
 

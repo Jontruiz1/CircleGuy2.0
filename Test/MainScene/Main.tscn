@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://c7sfquecmyevw"]
+
+[ext_resource type="Script" path="res://MainScene/Main.gd" id="1_l1vgf"]
+[ext_resource type="PackedScene" uid="uid://dwipgp8vfg4ky" path="res://MainScene/Player.tscn" id="2_cldc5"]
+[ext_resource type="Script" path="res://MainScene/Camera3D.gd" id="3_stuor"]
+[ext_resource type="PackedScene" uid="uid://ctyndqylo8n5n" path="res://MainScene/SideWalls.tscn" id="4_q5l4h"]
+[ext_resource type="PackedScene" uid="uid://do6yti2hwvnnn" path="res://MainScene/TopWall.tscn" id="5_l8k5i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rl20v"]
+size = Vector3(54.4673, 0.535465, 39.7773)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2oc3"]
+albedo_color = Color(0.666667, 0.6, 0.501961, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b8n83"]
+material = SubResource("StandardMaterial3D_i2oc3")
+size = Vector3(2.6, 1, 1.9)
+
+[node name="GameManager" type="Node3D"]
+script = ExtResource("1_l1vgf")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.138974, -0.149954, 0)
+shape = SubResource("BoxShape3D_rl20v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(21, 0, 0, 0, 0.525, 0, 0, 0, 21, -0.239724, 0, -0.0383506)
+mesh = SubResource("BoxMesh_b8n83")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.950943, 0.309366, 0, -0.309366, 0.950943, 0, 2.55679, 6.62779)
+
+[node name="Player" parent="." instance=ExtResource("2_cldc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.923919, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.644377, 0.764708, 0, -0.764708, 0.644377, 0, 8.42707, 9.745)
+fov = 118.782
+script = ExtResource("3_stuor")
+
+[node name="Health Text" type="Label" parent="Camera3D"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Health: "
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3994, -0.196556, 9.12108)
+
+[node name="LeftWall" parent="." instance=ExtResource("4_q5l4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6152, 0, -0.00639725)
+
+[node name="RightWall" parent="." instance=ExtResource("4_q5l4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.4889, -0.265026, 0.225409)
+
+[node name="Wall" parent="." instance=ExtResource("5_l8k5i")]
+transform = Transform3D(-0.0105996, 0.00350129, -0.999938, -0.000173536, 0.999994, 0.00350332, 0.999944, 0.000210642, -0.0105989, 0.000101089, 0.207853, -20.0591)
+
+[node name="Wall2" parent="." instance=ExtResource("5_l8k5i")]
+transform = Transform3D(-0.0105996, 0.00350129, -0.999938, -0.000173536, 0.999994, 0.00350332, 0.999944, 0.000210642, -0.0105989, 0.000101089, 0.207853, 19.8499)
