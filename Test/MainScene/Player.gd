@@ -11,11 +11,15 @@ var maxHealth = 6
 var damage = 1
 var score = 0
 var save_path = "user://score.save"
+var hurt = null
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
+	
+	hurt = $HurtNoise
+	
 	# iFrame cooldown 
 	iFrame.wait_time = 1
 	iFrame.one_shot = true
@@ -79,6 +83,7 @@ func process_collision():
 				if(iFrame.is_stopped()):
 					health -= collider.damage
 					iFrame.start()
+					hurt.play()
 					
 func game_over():
 	var highscore = 0

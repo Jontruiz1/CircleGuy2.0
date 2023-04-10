@@ -9,6 +9,8 @@ var t = Timer.new()
 var target = null
 var source = null
 var origin = null
+var shot = null
+var hurtnoise = null
 
 #initialize the bullet
 func init(src, playerpos, shoot_input, spd, dmg):
@@ -24,6 +26,8 @@ func init(src, playerpos, shoot_input, spd, dmg):
 	
 #make the bullet disappear after a 5 seconds so it doesn't lag the shit out of the game
 func _ready():
+	#shot = $ShotNoise
+	#hurtnoise = $Player/HurtNoise
 	self.look_at(target)
 	t.wait_time = 5
 	t.one_shot = true
@@ -56,8 +60,10 @@ func process_collision():
 				"Enemy":
 					collider.health -= self.damage
 					if(collider.health <= 0): origin.score += collider.value
+					#shot.play()
 					queue_free()
 					return
+
 
 func process_move(delta):
 	self.position = Vector3(self.position.x + (delta * shoot_direction.x) * speed , self.position.y + (delta*shoot_direction.y) * speed, self.position.z + (delta * shoot_direction.z) * speed)

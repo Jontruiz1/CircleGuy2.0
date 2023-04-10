@@ -14,6 +14,7 @@ material = SubResource("StandardMaterial3D_ix4s6")
 radius = 0.549929
 
 [node name="Enemy" type="CharacterBody3D"]
+process_mode = 1
 script = ExtResource("1_t88ca")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

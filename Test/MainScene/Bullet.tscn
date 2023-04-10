@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3vhng1l3ulg"]
+[gd_scene load_steps=6 format=3 uid="uid://b3vhng1l3ulg"]
 
 [ext_resource type="Script" path="res://MainScene/Bullet.gd" id="1_s7rlb"]
+[ext_resource type="AudioStream" uid="uid://xu7fhga8f2i4" path="res://Shot.mp3" id="2_m5aa1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yx2pf"]
 albedo_color = Color(0.294118, 0.247059, 0.784314, 1)
@@ -11,6 +12,7 @@ material = SubResource("StandardMaterial3D_yx2pf")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hh0ue"]
 
 [node name="Bullet" type="CharacterBody3D"]
+process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000124931, 0.00305939, -0.00174081)
 script = ExtResource("1_s7rlb")
 
@@ -21,3 +23,7 @@ mesh = SubResource("CapsuleMesh_gjspb")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-0.00132731, -0.149994, 0, 0.149994, -0.00132731, 0, 0, 0, 0.15, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_hh0ue")
+
+[node name="ShotNoise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_m5aa1")
+volume_db = 5.0

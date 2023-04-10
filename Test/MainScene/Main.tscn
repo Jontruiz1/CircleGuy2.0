@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7sfquecmyevw"]
+[gd_scene load_steps=11 format=3 uid="uid://c7sfquecmyevw"]
 
 [ext_resource type="Script" path="res://MainScene/Main.gd" id="1_l1vgf"]
 [ext_resource type="PackedScene" uid="uid://dwipgp8vfg4ky" path="res://MainScene/Player.tscn" id="2_cldc5"]
+[ext_resource type="AudioStream" uid="uid://bp86baaa7jbmm" path="res://Hurt.wav" id="3_kit6j"]
 [ext_resource type="Script" path="res://MainScene/Camera3D.gd" id="3_stuor"]
 [ext_resource type="PackedScene" uid="uid://ctyndqylo8n5n" path="res://MainScene/SideWalls.tscn" id="4_q5l4h"]
 [ext_resource type="PackedScene" uid="uid://do6yti2hwvnnn" path="res://MainScene/TopWall.tscn" id="5_l8k5i"]
@@ -18,9 +19,11 @@ material = SubResource("StandardMaterial3D_i2oc3")
 size = Vector3(2.6, 1, 1.9)
 
 [node name="GameManager" type="Node3D"]
+process_mode = 3
 script = ExtResource("1_l1vgf")
 
 [node name="Floor" type="StaticBody3D" parent="."]
+process_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.138974, -0.149954, 0)
@@ -31,12 +34,19 @@ transform = Transform3D(21, 0, 0, 0, 0.525, 0, 0, 0, 21, -0.239724, 0, -0.038350
 mesh = SubResource("BoxMesh_b8n83")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 0.950943, 0.309366, 0, -0.309366, 0.950943, 0, 2.55679, 6.62779)
 
 [node name="Player" parent="." instance=ExtResource("2_cldc5")]
+process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.923919, 0)
 
+[node name="HurtNoise" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("3_kit6j")
+volume_db = 5.0
+
 [node name="Camera3D" type="Camera3D" parent="."]
+process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 0.644377, 0.764708, 0, -0.764708, 0.644377, 0, 8.42707, 9.745)
 fov = 118.782
 script = ExtResource("3_stuor")
@@ -56,7 +66,20 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "Score: "
 
+[node name="Wave" type="Label" parent="Camera3D"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 160.0
+offset_right = 20.0
+offset_bottom = 183.0
+grow_horizontal = 2
+text = "Wave: "
+
 [node name="Walls" type="Node" parent="."]
+process_mode = 1
 
 [node name="LeftWall" parent="Walls" instance=ExtResource("4_q5l4h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6152, 1.67972, -0.00639725)

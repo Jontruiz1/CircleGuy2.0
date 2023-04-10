@@ -7,6 +7,7 @@ var enemyTypes = {
 	Color.GREEN : [2, 3, 2, 150, false], 
 	Color.PURPLE : [4, 1, 4, 200, true],
 	Color.BLACK : [6, 0, 3, 250, true]
+	#Color.BROWN :[
 }
 var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.BLACK]
 var powerUps = []
@@ -16,7 +17,9 @@ var player
 var rng
 var camera
 
-# Called when the node enters the scene tree for the first time.
+signal pause()
+
+# Called when the node enters the scene tree or the first time.
 func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.seed = hash(Time.get_time_string_from_system())
@@ -24,17 +27,15 @@ func _ready():
 	spawnWave()
 
 func spawnWave():
-	for n in range(wave*3):
-		var enemyVariety
-		if wave >= enemyColors.size(): enemyVariety = rng.randf_range(0, enemyColors.size())
-		else: enemyVariety = rng.randf_range(0, wave)
+	for n in range(wave*4):
+		var enemyVariety = rng.randf_range(0, wave)
+		enemyVariety = clamp(enemyVariety, 0, enemyColors.size()-1)
+		var enemy_x = rng.randf_range(-27, 27)
+		var enemy_z = rng.randf_range(-20, 20)
 		
-		var enemy_x = rng.randf_range(-12, 12)
-		var enemy_z = rng.randf_range(-9, 9)
-		
-		while(pow((enemy_x - player.position.x), 2) + pow((enemy_z - player.position.z), 2) < pow(7, 2)):
-			enemy_x = rng.randf_range(-12, 12)
-			enemy_z = rng.randf_range(-9, 9) 
+		while(pow((enemy_x - player.position.x), 2) + pow((enemy_z - player.position.z), 2) < pow(10, 2)):
+			enemy_x = rng.randf_range(-27, 27)
+			enemy_z = rng.randf_range(-20, 20) 
 		
 		var enemyColor = enemyColors[enemyVariety]
 		var enemy = preload("res://MainScene/Enemy.tscn").instantiate()
@@ -48,7 +49,6 @@ func _input(event):
 		get_tree().paused = not (get_tree().paused)
 
 func _process(_delta):
-	
 	if(enemyCount == 0):
 		wave += 1
 		spawnWave()
