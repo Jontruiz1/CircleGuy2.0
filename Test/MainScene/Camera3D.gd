@@ -24,6 +24,7 @@ func _ready():
 	healthLabel.text = "Health: " + str(player.health)
 	scoreLabel.text = "Score: " + str(player.score)
 	waveLabel.text = "Wave: " + str(gameManager.wave)
+	
 	currentScore = player.score
 	currentHP = player.health
 	

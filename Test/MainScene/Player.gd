@@ -12,13 +12,16 @@ var damage = 1
 var score = 0
 var save_path = "user://score.save"
 var hurt = null
+var shotSound = null
+var hit = null
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
-	
-	hurt = $HurtNoise
+	shotSound = get_child(2)
+	hurt = get_child(3)
+	hit = get_child(4)
 	
 	# iFrame cooldown 
 	iFrame.wait_time = 1
@@ -40,7 +43,7 @@ func process_shoot():
 	if shoot_input and shoot_cooldown.is_stopped():	
 		# load and instantiate the bullet
 		var bullet = preload("res://MainScene/Bullet.tscn").instantiate()
-		
+		shotSound.play()
 		#initialize bullet, add to tree, start shoot cooldown
 		bullet.init(self ,self.position, shoot_input, bullet_speed, damage)
 		get_tree().get_root().add_child(bullet)

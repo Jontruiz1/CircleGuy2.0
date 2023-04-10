@@ -7,17 +7,15 @@ var enemyTypes = {
 	Color.GREEN : [2, 3, 2, 150, false], 
 	Color.PURPLE : [4, 1, 4, 200, true],
 	Color.BLACK : [6, 0, 3, 250, true]
-	#Color.BROWN :[
+	#Color.BROWN :[]
 }
 var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.BLACK]
 var powerUps = []
 var wave = 1
 var enemyCount = 0
-var player
-var rng
-var camera
-
-signal pause()
+var player = null
+var rng = null
+var camera = null
 
 # Called when the node enters the scene tree or the first time.
 func _ready():

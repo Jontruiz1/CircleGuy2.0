@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://c7sfquecmyevw"]
+[gd_scene load_steps=13 format=3 uid="uid://c7sfquecmyevw"]
 
 [ext_resource type="Script" path="res://MainScene/Main.gd" id="1_l1vgf"]
 [ext_resource type="PackedScene" uid="uid://dwipgp8vfg4ky" path="res://MainScene/Player.tscn" id="2_cldc5"]
-[ext_resource type="AudioStream" uid="uid://bp86baaa7jbmm" path="res://Hurt.wav" id="3_kit6j"]
 [ext_resource type="Script" path="res://MainScene/Camera3D.gd" id="3_stuor"]
 [ext_resource type="PackedScene" uid="uid://ctyndqylo8n5n" path="res://MainScene/SideWalls.tscn" id="4_q5l4h"]
 [ext_resource type="PackedScene" uid="uid://do6yti2hwvnnn" path="res://MainScene/TopWall.tscn" id="5_l8k5i"]
@@ -17,6 +16,14 @@ albedo_color = Color(0.666667, 0.6, 0.501961, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_b8n83"]
 material = SubResource("StandardMaterial3D_i2oc3")
 size = Vector3(2.6, 1, 1.9)
+
+[sub_resource type="Theme" id="Theme_m2kn0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_x8gw3"]
+font_color = Color(0.952941, 0.0745098, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e6b8s"]
+font_color = Color(0.117647, 0.360784, 0, 1)
 
 [node name="GameManager" type="Node3D"]
 process_mode = 3
@@ -41,10 +48,6 @@ transform = Transform3D(1, 0, 0, 0, 0.950943, 0.309366, 0, -0.309366, 0.950943, 
 process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.923919, 0)
 
-[node name="HurtNoise" type="AudioStreamPlayer" parent="Player"]
-stream = ExtResource("3_kit6j")
-volume_db = 5.0
-
 [node name="Camera3D" type="Camera3D" parent="."]
 process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 0.644377, 0.764708, 0, -0.764708, 0.644377, 0, 8.42707, 9.745)
@@ -52,19 +55,25 @@ fov = 118.782
 script = ExtResource("3_stuor")
 
 [node name="Health Text" type="Label" parent="Camera3D"]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 100.0
+offset_bottom = 66.0
+theme = SubResource("Theme_m2kn0")
 text = "Health: "
+label_settings = SubResource("LabelSettings_x8gw3")
 
 [node name="Score" type="Label" parent="Camera3D"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -20.0
+offset_top = 40.0
 offset_right = 48.0
-offset_bottom = 23.0
+offset_bottom = 66.0
 grow_horizontal = 2
 text = "Score: "
+label_settings = SubResource("LabelSettings_e6b8s")
 
 [node name="Wave" type="Label" parent="Camera3D"]
 visible = false

@@ -1,16 +1,15 @@
 class_name Bullet
 extends CharacterBody3D
 
+var t = Timer.new()
 
 var shoot_direction = null
 var speed = null
 var damage = null
-var t = Timer.new()
 var target = null
 var source = null
 var origin = null
-var shot = null
-var hurtnoise = null
+var hit = null
 
 #initialize the bullet
 func init(src, playerpos, shoot_input, spd, dmg):
@@ -26,8 +25,7 @@ func init(src, playerpos, shoot_input, spd, dmg):
 	
 #make the bullet disappear after a 5 seconds so it doesn't lag the shit out of the game
 func _ready():
-	#shot = $ShotNoise
-	#hurtnoise = $Player/HurtNoise
+	hit = $AudioStreamPlayer
 	self.look_at(target)
 	t.wait_time = 5
 	t.one_shot = true
@@ -54,15 +52,14 @@ func process_collision():
 				"Player":
 					if(collider.iFrame.is_stopped()):
 						collider.health -= self.damage
+						collider.hit.play()
 						collider.iFrame.start()
 						queue_free()
-						return
 				"Enemy":
 					collider.health -= self.damage
+					collider.hit.play()
 					if(collider.health <= 0): origin.score += collider.value
-					#shot.play()
 					queue_free()
-					return
 
 
 func process_move(delta):

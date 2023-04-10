@@ -56,7 +56,7 @@ text = "Play
 "
 script = ExtResource("2_83584")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Camera3D"]
+[node name="Title" type="RichTextLabel" parent="Camera3D"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5

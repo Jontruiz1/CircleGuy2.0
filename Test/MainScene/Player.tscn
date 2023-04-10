@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwipgp8vfg4ky"]
+[gd_scene load_steps=8 format=3 uid="uid://dwipgp8vfg4ky"]
 
 [ext_resource type="Script" path="res://MainScene/Player.gd" id="1_m55gv"]
+[ext_resource type="AudioStream" uid="uid://d31sdwmj5nctf" path="res://Shot.wav" id="2_om7q5"]
+[ext_resource type="AudioStream" uid="uid://bp86baaa7jbmm" path="res://Hurt.wav" id="3_toq8d"]
+[ext_resource type="AudioStream" uid="uid://o25vumvpllg6" path="res://Hit.wav" id="4_tkqjy"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_figho"]
 radius = 0.519702
@@ -20,3 +23,14 @@ shape = SubResource("SphereShape3D_figho")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_cibx0")
+
+[node name="ShotSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_om7q5")
+volume_db = -20.0
+
+[node name="HurtNoise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_toq8d")
+volume_db = -20.0
+
+[node name="ShotNoise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_tkqjy")
