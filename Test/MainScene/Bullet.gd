@@ -8,6 +8,7 @@ var damage = null
 var t = Timer.new()
 var target = null
 var source = null
+var origin = null
 
 #initialize the bullet
 func init(src, playerpos, shoot_input, spd, dmg):
@@ -15,6 +16,7 @@ func init(src, playerpos, shoot_input, spd, dmg):
 	shoot_direction = (transform.basis * Vector3(shoot_input.x, 0, shoot_input.y)).normalized()
 	damage = dmg
 	speed = spd;
+	origin = src
 	source = src.name.replace("@", "").rstrip("0123456789")
 	self.position =  Vector3(target.x + shoot_input.x, target.y, target.z + shoot_input.y)
 	self.rotation = (transform.basis * Vector3(shoot_input.x, 0, shoot_input.y)).normalized()
@@ -37,23 +39,25 @@ func process_collision():
 	if collideCount >= 1:
 		var collision = get_slide_collision(collideCount-1)
 		var collider = collision.get_collider()
-		print(collider)
+		
+		if(collider == null): return
 		var collideName = collider.name
 		collideName = collideName.replace("@", "").rstrip("0123456789")
 		
+		if(collideName.contains("Wall")): queue_free()
 		if(source != collideName):
 			match collideName:
 				"Player":
 					if(collider.iFrame.is_stopped()):
 						collider.health -= self.damage
+						collider.iFrame.start()
 						queue_free()
+						return
 				"Enemy":
 					collider.health -= self.damage
+					if(collider.health <= 0): origin.score += collider.value
 					queue_free()
-				"Wall":
-					queue_free()
-				null:
-					print("idk why it's null but it is")
+					return
 
 func process_move(delta):
 	self.position = Vector3(self.position.x + (delta * shoot_direction.x) * speed , self.position.y + (delta*shoot_direction.y) * speed, self.position.z + (delta * shoot_direction.z) * speed)

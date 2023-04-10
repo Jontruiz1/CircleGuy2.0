@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7sfquecmyevw"]
+[gd_scene load_steps=10 format=3 uid="uid://c7sfquecmyevw"]
 
 [ext_resource type="Script" path="res://MainScene/Main.gd" id="1_l1vgf"]
 [ext_resource type="PackedScene" uid="uid://dwipgp8vfg4ky" path="res://MainScene/Player.tscn" id="2_cldc5"]
 [ext_resource type="Script" path="res://MainScene/Camera3D.gd" id="3_stuor"]
 [ext_resource type="PackedScene" uid="uid://ctyndqylo8n5n" path="res://MainScene/SideWalls.tscn" id="4_q5l4h"]
 [ext_resource type="PackedScene" uid="uid://do6yti2hwvnnn" path="res://MainScene/TopWall.tscn" id="5_l8k5i"]
+[ext_resource type="PackedScene" uid="uid://db2nahwxf71gx" path="res://MainScene/CameraWall.tscn" id="6_loui8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rl20v"]
 size = Vector3(54.4673, 0.535465, 39.7773)
@@ -45,17 +46,26 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "Health: "
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3994, -0.196556, 9.12108)
+[node name="Score" type="Label" parent="Camera3D"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 48.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Score: "
 
-[node name="LeftWall" parent="." instance=ExtResource("4_q5l4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6152, 0, -0.00639725)
+[node name="Walls" type="Node" parent="."]
 
-[node name="RightWall" parent="." instance=ExtResource("4_q5l4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.4889, -0.265026, 0.225409)
+[node name="LeftWall" parent="Walls" instance=ExtResource("4_q5l4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6152, 1.67972, -0.00639725)
 
-[node name="Wall" parent="." instance=ExtResource("5_l8k5i")]
-transform = Transform3D(-0.0105996, 0.00350129, -0.999938, -0.000173536, 0.999994, 0.00350332, 0.999944, 0.000210642, -0.0105989, 0.000101089, 0.207853, -20.0591)
+[node name="RightWall" parent="Walls" instance=ExtResource("4_q5l4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.4889, 1.77746, 0.225409)
 
-[node name="Wall2" parent="." instance=ExtResource("5_l8k5i")]
-transform = Transform3D(-0.0105996, 0.00350129, -0.999938, -0.000173536, 0.999994, 0.00350332, 0.999944, 0.000210642, -0.0105989, 0.000101089, 0.207853, 19.8499)
+[node name="TopWall" parent="Walls" instance=ExtResource("5_l8k5i")]
+transform = Transform3D(-0.0105996, 0.00350129, -0.999938, -0.000173536, 0.999994, 0.00350332, 0.999944, 0.000210642, -0.0105989, 0.000101089, 9.20852, -20.0591)
+
+[node name="CameraWall" parent="Walls" instance=ExtResource("6_loui8")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 5.81705, 19.6101)

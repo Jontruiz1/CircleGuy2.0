@@ -2,11 +2,11 @@ extends Node3D
 
 # health, speed, damage, shoot
 var enemyTypes = {
-	Color.RED : [2, 2, 2, false], 
-	Color.BLUE : [3, 2, 3, false], 
-	Color.GREEN : [2, 3, 2, false], 
-	Color.PURPLE : [4, 1, 4, true],
-	Color.BLACK : [6, 0, 3, true]
+	Color.RED : [2, 2, 2, 50, false], 
+	Color.BLUE : [3, 2, 3, 100, false], 
+	Color.GREEN : [2, 3, 2, 150, false], 
+	Color.PURPLE : [4, 1, 4, 200, true],
+	Color.BLACK : [6, 0, 3, 250, true]
 }
 var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.BLACK]
 var powerUps = []
@@ -26,7 +26,7 @@ func _ready():
 func spawnWave():
 	for n in range(wave*3):
 		var enemyVariety
-		if wave >= enemyColors.size(): enemyVariety = rng.randf_range(0, enemyColors.size()-1)
+		if wave >= enemyColors.size(): enemyVariety = rng.randf_range(0, enemyColors.size())
 		else: enemyVariety = rng.randf_range(0, wave)
 		
 		var enemy_x = rng.randf_range(-12, 12)
@@ -39,7 +39,7 @@ func spawnWave():
 		var enemyColor = enemyColors[enemyVariety]
 		var enemy = preload("res://MainScene/Enemy.tscn").instantiate()
 		enemy.position = Vector3(enemy_x, .6, enemy_z)
-		enemy.init(enemyTypes[enemyColor][0], enemyTypes[enemyColor][1], enemyTypes[enemyColor][2], enemyTypes[enemyColor][3], enemyColor, player)
+		enemy.init(enemyTypes[enemyColor][0], enemyTypes[enemyColor][1], enemyTypes[enemyColor][2], enemyTypes[enemyColor][3], enemyTypes[enemyColor][4], enemyColor, player)
 		add_child(enemy)
 		enemyCount += 1
 		
@@ -47,9 +47,8 @@ func _input(event):
 	if event.is_action_pressed("pause"):
 		get_tree().paused = not (get_tree().paused)
 
-
-
 func _process(_delta):
+	
 	if(enemyCount == 0):
 		wave += 1
 		spawnWave()

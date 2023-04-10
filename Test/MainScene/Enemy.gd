@@ -7,16 +7,18 @@ var damage = null
 var can_shoot = null
 var type = null
 var target = null
+var value = null
 var shoot_cooldown = Timer.new()
 var colorMatches = {Color.RED : "Red", Color.BLUE : "Blue", Color.GREEN : "Green", Color.PURPLE : "Purple", Color.BLACK : "Black"}
 
-func init(hp, spd, dmg, shoot, color, player):
+func init(hp, spd, dmg, val, shoot, color, player):
 	health = hp
 	speed = spd
 	damage = dmg
 	type = color
 	can_shoot = shoot
 	target = player
+	value = val
 	
 	# change color
 	var material = $MeshInstance3D.get_active_material(0)
@@ -39,6 +41,8 @@ func process_move():
 		
 		# place the bullet at the correct starting position
 		bullet.init(self, self.position, tempFix, 3, damage-2)
+		bullet.set_collision_layer_value(1, false)
+		bullet.set_collision_layer_value(2, true)
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
 

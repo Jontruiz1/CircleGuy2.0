@@ -2,22 +2,26 @@ class_name Player
 extends CharacterBody3D
 
 
-const SPEED = 5.0
+var speed = 6
 var bullet_speed = 5
 var shoot_cooldown = Timer.new()
 var iFrame = Timer.new()
 var health = 6
+var maxHealth = 6
 var damage = 1
-
+var score = 0
+var save_path = "user://score.save"
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
+	# iFrame cooldown 
 	iFrame.wait_time = 1
 	iFrame.one_shot = true
 	add_child(iFrame)
 	
+	# shooting cooldown
 	shoot_cooldown.wait_time = .5
 	shoot_cooldown.one_shot = true
 	add_child(shoot_cooldown)
@@ -33,7 +37,7 @@ func process_shoot():
 		# load and instantiate the bullet
 		var bullet = preload("res://MainScene/Bullet.tscn").instantiate()
 		
-		#initialize bullet, add to tree start shoot cooldown
+		#initialize bullet, add to tree, start shoot cooldown
 		bullet.init(self ,self.position, shoot_input, bullet_speed, damage)
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
@@ -49,36 +53,50 @@ func process_move(delta):
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
 
 # will handle colliding with enemies
 func process_collision():
+	# gets number of collisions
 	var collideCount = get_slide_collision_count()
 	
 	if collideCount >= 1:
 		var collision = get_slide_collision(collideCount-1)
 		var collider = collision.get_collider()
+		
+		# if collider is null don't proceed
+		if(collider == null): return
 		var collideName = collider.name
-		if(collideName != null):
-			collideName = collideName.replace("@", "").rstrip("0123456789")
-		else:
-			pass
+		collideName = collideName.replace("@", "").rstrip("0123456789")
+		
+		# parse collider name
 		match collideName:
 			"Enemy":
 				if(iFrame.is_stopped()):
 					health -= collider.damage
 					iFrame.start()
-			
+					
+func game_over():
+	var highscore = 0
+	if FileAccess.file_exists(save_path):
+		var file = FileAccess.open(save_path, FileAccess.READ)
+		highscore = file.get_var()
+	
+	if(highscore < score): highscore = score
+	
+	var file = FileAccess.open(save_path, FileAccess.WRITE)
+	file.store_var(highscore)
+	#var savegame = File.new()
+	#var same_path = "res://savegame.save"
+	get_tree().change_scene_to_file("res://Menu.tscn")	
 
 func _physics_process(delta):
-	if(health <= 0): 
-		#queue_free()
-		print("Death")
 	process_collision()
 	process_move(delta)
 	process_shoot()
 	move_and_slide()
+	if(health <= 0): game_over()

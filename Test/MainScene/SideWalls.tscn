@@ -8,7 +8,7 @@ size = Vector3(1, 6.231, 39.9993)
 [node name="Wall" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 20, 0, 0, 0, 40, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 20, 0, 0, 0, 40, 0, 7.85335, 0)
 mesh = SubResource("BoxMesh_2yv08")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
