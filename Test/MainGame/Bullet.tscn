@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3vhng1l3ulg"]
+[gd_scene load_steps=6 format=3 uid="uid://c5pl3ycocqxlp"]
 
-[ext_resource type="Script" path="res://MainScene/Bullet.gd" id="1_s7rlb"]
-[ext_resource type="AudioStream" uid="uid://o25vumvpllg6" path="res://Hit.wav" id="2_6x1il"]
+[ext_resource type="Script" path="res://MainGame/Bullet.gd" id="1_jqnhn"]
+[ext_resource type="AudioStream" uid="uid://o25vumvpllg6" path="res://MainGame/SoundEffects/Hit.wav" id="2_hldgr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yx2pf"]
 albedo_color = Color(0.294118, 0.247059, 0.784314, 1)
@@ -14,7 +14,7 @@ material = SubResource("StandardMaterial3D_yx2pf")
 [node name="Bullet" type="CharacterBody3D"]
 process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000124931, 0.00305939, -0.00174081)
-script = ExtResource("1_s7rlb")
+script = ExtResource("1_jqnhn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-0.00132731, -0.149994, 0, 0.149994, -0.00132731, 0, 0, 0, 0.15, 0, 0, 0)
@@ -25,4 +25,4 @@ transform = Transform3D(-0.00132731, -0.149994, 0, 0.149994, -0.00132731, 0, 0, 
 shape = SubResource("CapsuleShape3D_hh0ue")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_6x1il")
+stream = ExtResource("2_hldgr")

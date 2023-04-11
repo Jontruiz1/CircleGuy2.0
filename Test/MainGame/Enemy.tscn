@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bprj8mlrp3sck"]
+[gd_scene load_steps=6 format=3 uid="uid://bvh8iywrk1m1b"]
 
-[ext_resource type="Script" path="res://MainScene/Enemy.gd" id="1_t88ca"]
-[ext_resource type="AudioStream" uid="uid://o25vumvpllg6" path="res://Hit.wav" id="2_ftuyw"]
+[ext_resource type="Script" path="res://MainGame/Enemy.gd" id="1_xrthm"]
+[ext_resource type="AudioStream" uid="uid://o25vumvpllg6" path="res://MainGame/SoundEffects/Hit.wav" id="2_gjtap"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ix4s6"]
 resource_local_to_scene = true
@@ -16,7 +16,7 @@ radius = 0.549929
 
 [node name="Enemy" type="CharacterBody3D"]
 process_mode = 1
-script = ExtResource("1_t88ca")
+script = ExtResource("1_xrthm")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_bapcp")
@@ -25,4 +25,4 @@ mesh = SubResource("SphereMesh_bapcp")
 shape = SubResource("SphereShape3D_f2sau")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_ftuyw")
+stream = ExtResource("2_gjtap")

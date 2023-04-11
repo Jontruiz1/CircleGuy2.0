@@ -8,6 +8,6 @@ func _button_pressed():
 	var btnName = self.name
 	match btnName:
 		"PlayBtn":
-			get_tree().change_scene_to_file("res://MainScene/Main.tscn")
+			get_tree().change_scene_to_file("res://MainGame/Main.tscn")
 		"QuitBtn":
 			get_tree().quit()

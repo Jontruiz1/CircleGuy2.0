@@ -52,13 +52,19 @@ func process_collision():
 				"Player":
 					if(collider.iFrame.is_stopped()):
 						collider.health -= self.damage
+						collider.score -= (source.value * .5)
+						collider.score = clamp(collider.score, 0, 999999999)
+						
 						collider.hit.play()
+						collider.hurt.play()
 						collider.iFrame.start()
 						queue_free()
 				"Enemy":
 					collider.health -= self.damage
 					collider.hit.play()
-					if(collider.health <= 0): origin.score += collider.value
+					if(collider.health <= 0): 
+						origin.score += collider.value
+						origin.score = clamp(origin.score, 0, 999999999)
 					queue_free()
 
 

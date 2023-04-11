@@ -4,7 +4,7 @@ extends CharacterBody3D
 var shoot_cooldown = Timer.new()
 var colorMatches = {Color.RED : "Red", Color.BLUE : "Blue", Color.GREEN : "Green", Color.PURPLE : "Purple", Color.BLACK : "Black"}
 
-
+var bulletObj = null
 var health = null
 var speed = null
 var damage = null
@@ -37,12 +37,13 @@ func init(hp, spd, dmg, val, shoot, color, player):
 
 func _ready():
 	hit = get_child(2)
+	bulletObj = preload("res://MainGame/Bullet.tscn")
 
 # process the shooting if possible
 func process_shoot():
 	
 	if can_shoot and shoot_cooldown.is_stopped():
-		var bullet = preload("res://MainScene/Bullet.tscn").instantiate()
+		var bullet = bulletObj.instantiate()
 		
 		var tempFix = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
 		

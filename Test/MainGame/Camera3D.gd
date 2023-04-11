@@ -35,10 +35,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if(currentHP > player.health): healthLabel.text = "Health: " + str(player.health)
-	if(currentScore < player.score): scoreLabel.text = "Score: " + str(player.score)
+	if(currentHP != player.health): healthLabel.text = "Health: " + str(player.health)
+	if(currentScore != player.score): scoreLabel.text = "Score: " + str(player.score)
 	
-	if(currentWave < gameManager.wave): 
+	if(currentWave < gameManager.wave):
+		timer.stop() 
 		waveLabel.text = "Wave: " + str(gameManager.wave)
 		waveLabel.visible = true
 		currentWave = gameManager.wave

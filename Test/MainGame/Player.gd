@@ -14,14 +14,17 @@ var save_path = "user://score.save"
 var hurt = null
 var shotSound = null
 var hit = null
+var bulletObj = null
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
-	shotSound = get_child(2)
-	hurt = get_child(3)
-	hit = get_child(4)
+	bulletObj = preload("res://MainGame/Bullet.tscn")
+	
+	shotSound = get_node("ShootNoise")
+	hurt = get_node("HurtNoise")
+	hit = get_node("ShotNoise")
 	
 	# iFrame cooldown 
 	iFrame.wait_time = 1
@@ -42,7 +45,7 @@ func process_shoot():
 	# trying to shoot and there's no cooldown
 	if shoot_input and shoot_cooldown.is_stopped():	
 		# load and instantiate the bullet
-		var bullet = preload("res://MainScene/Bullet.tscn").instantiate()
+		var bullet = bulletObj.instantiate()
 		shotSound.play()
 		#initialize bullet, add to tree, start shoot cooldown
 		bullet.init(self ,self.position, shoot_input, bullet_speed, damage)
@@ -85,6 +88,8 @@ func process_collision():
 			"Enemy":
 				if(iFrame.is_stopped()):
 					health -= collider.damage
+					score -= (collider.value * .5)
+					score = clamp(score, 0, 999999999)
 					iFrame.start()
 					hurt.play()
 					
@@ -100,7 +105,7 @@ func game_over():
 	file.store_var(highscore)
 	#var savegame = File.new()
 	#var same_path = "res://savegame.save"
-	get_tree().change_scene_to_file("res://Menu.tscn")	
+	get_tree().change_scene_to_file("res://MainMenu/Menu.tscn")	
 
 func _physics_process(delta):
 	process_collision()
