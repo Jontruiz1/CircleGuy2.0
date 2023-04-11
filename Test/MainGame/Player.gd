@@ -105,7 +105,7 @@ func game_over():
 	file.store_var(highscore)
 	#var savegame = File.new()
 	#var same_path = "res://savegame.save"
-	get_tree().change_scene_to_file("res://MainMenu/Menu.tscn")	
+	get_tree().change_scene_to_file("res://GameOver/GameOver.tscn")	
 
 func _physics_process(delta):
 	process_collision()

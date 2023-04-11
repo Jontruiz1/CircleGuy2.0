@@ -11,3 +11,7 @@ func _button_pressed():
 			get_tree().change_scene_to_file("res://MainGame/Main.tscn")
 		"QuitBtn":
 			get_tree().quit()
+		"MainMenuBtn":
+			get_tree().change_scene_to_file("res://MainMenu/Menu.tscn")
+		"PlayAgainBtn":
+			get_tree().change_scene_to_file("res://MainGame/Main.tscn")
