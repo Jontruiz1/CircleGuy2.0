@@ -1,7 +1,7 @@
 class_name Bullet
 extends CharacterBody3D
 
-var t = Timer.new()
+var lifeTime = Timer.new()
 
 var shoot_direction = null
 var speed = null
@@ -27,14 +27,14 @@ func init(src, playerpos, shoot_input, spd, dmg):
 func _ready():
 	hit = $AudioStreamPlayer
 	self.look_at(target)
-	t.wait_time = 5
-	t.one_shot = true
-	t.timeout.connect(func() : queue_free())
-	get_tree().get_root().add_child(t)
-	t.start()
+	lifeTime.wait_time = 7
+	lifeTime.one_shot = true
+	lifeTime.timeout.connect(func() : queue_free())
+	get_tree().get_root().add_child(lifeTime)
+	lifeTime.start()
 	
 func parse_collision(collider):
-	if(collider == null): return
+	if(collider == null): return ""
 	var collideName = collider.name
 	collideName = collideName.replace("@", "").rstrip("0123456789")
 	return collideName
@@ -67,6 +67,7 @@ func process_move(delta):
 	self.position = Vector3(self.position.x + (delta * shoot_direction.x) * speed , self.position.y + (delta*shoot_direction.y) * speed, self.position.z + (delta * shoot_direction.z) * speed)
 
 func _physics_process(delta):
+	if(origin == null): queue_free()
 	process_move(delta)
 	process_collision()
 	move_and_slide()

@@ -44,6 +44,9 @@ func init(hp, spd, dmg, val, shoot, color, player):
 	add_child(shoot_cooldown)
 
 func _ready():
+	set_collision_layer(3)
+	set_collision_mask(1)
+
 	node = get_node("Sprite3D")
 	hit = get_node("EnemyHit")
 	bulletObj = preload("res://MainGame/Bullet.tscn")
@@ -57,8 +60,8 @@ func process_shoot():
 		# place the bullet at the correct starting position
 		var tempFix = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
 		bullet.init(self, self.position, tempFix, 3, damage)
-		bullet.set_collision_mask(1)
 		bullet.set_collision_layer(2)
+		bullet.set_collision_mask(1)
 		
 		get_tree().get_root().add_child(bullet)
 		

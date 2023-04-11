@@ -16,7 +16,7 @@ var bossColors = [Color.BLACK]
 var game_music = ["res://MainGame/Music/Track1-InGame.mp3"]
 
 var powerUps = []
-var wave = 1
+var wave = 6
 var enemyCount = 0
 var pause_menu = null
 var player = null
@@ -50,6 +50,7 @@ func normal_wave():
 		var enemy = enemyObj.instantiate()
 		enemy.position = Vector3(enemy_x, .6, enemy_z)
 		enemy.init(enemyTypes[enemyColor][0], enemyTypes[enemyColor][1], enemyTypes[enemyColor][2], enemyTypes[enemyColor][3], enemyTypes[enemyColor][4], enemyColor, player)
+		enemy.set_collision_layer(2)
 		add_child(enemy)
 		enemyCount += 1
 

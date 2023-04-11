@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody3D
 
 
-var speed = 6
+var speed = 5.5
 var bullet_speed = 5
 var shoot_cooldown = Timer.new()
 var iFrame = Timer.new()
@@ -21,6 +21,10 @@ var bulletObj = null
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
+	# player on layer 1, look for collisions on layer 3
+	set_collision_layer(1)
+	set_collision_mask(3)
+	
 	bulletObj = preload("res://MainGame/Bullet.tscn")
 	
 	shotSound = get_node("ShootNoise")
@@ -47,13 +51,13 @@ func process_shoot():
 	if shoot_input and shoot_cooldown.is_stopped():	
 		# load and instantiate the bullet
 		var bullet = bulletObj.instantiate()
-		bullet.set_collision_mask(1)
-		bullet.set_collision_layer(2)
 		shotSound.play()
 		
 		#initialize bullet, add to tree, start shoot cooldown
 		bullet.init(self ,self.position, shoot_input, bullet_speed, damage)
 		
+		bullet.set_collision_layer(2)
+		bullet.set_collision_mask(3)
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
 		
