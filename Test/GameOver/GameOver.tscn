@@ -46,9 +46,9 @@ fov = 118.782
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -60.0
+offset_left = -52.0
 offset_top = 192.0
-offset_right = 60.0
+offset_right = 68.0
 offset_bottom = 232.0
 grow_horizontal = 2
 text = "Game Over!"
@@ -83,23 +83,32 @@ text = "Main Menu
 script = ExtResource("3_yelox")
 
 [node name="QuitBtn" type="Button" parent="Camera3D"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 131.0
-offset_top = -255.0
-offset_right = 173.0
-offset_bottom = -224.0
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -474.0
+offset_top = 72.5
+offset_right = -432.0
+offset_bottom = 103.5
+grow_horizontal = 0
+grow_vertical = 2
 text = "Quit"
 script = ExtResource("3_yelox")
 
-[node name="HighScore" type="Label" parent="Camera3D"]
-offset_right = 86.0
-offset_bottom = 26.0
+[node name="CurrentScore" type="Label" parent="Camera3D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = -77.0
+offset_right = 43.0
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Highscore: "
 script = ExtResource("4_vgyag")
 

@@ -10,7 +10,8 @@ var health = 6
 var maxHealth = 6
 var damage = 1
 var score = 0
-var save_path = "user://score.save"
+var highscore_path = "user://score.save"
+var score_path = "user://currscore.save"
 var hurt = null
 var shotSound = null
 var hit = null
@@ -46,12 +47,16 @@ func process_shoot():
 	if shoot_input and shoot_cooldown.is_stopped():	
 		# load and instantiate the bullet
 		var bullet = bulletObj.instantiate()
+		bullet.set_collision_mask(1)
+		bullet.set_collision_layer(2)
 		shotSound.play()
+		
 		#initialize bullet, add to tree, start shoot cooldown
 		bullet.init(self ,self.position, shoot_input, bullet_speed, damage)
+		
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
-
+		
 # processing player movement
 func process_move(delta):
 	# Add the gravity.
@@ -68,7 +73,26 @@ func process_move(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
+		
+func update_score(amount):
+	score += (amount * .5)
+	score = clamp(score, 0, 999999999)
 
+func process_damage(damage_amt, currVal):
+	if(iFrame.is_stopped()):
+		health -= damage_amt
+		update_score(-currVal)	
+		hit.play()
+		hurt.play()
+		iFrame.start()
+
+func parse_collision(collider):
+	if(collider == null): return
+	var collideName = collider.name
+	collideName = collideName.replace("@", "").rstrip("0123456789")
+	return collideName
+	
+	
 # will handle colliding with enemies
 func process_collision():
 	# gets number of collisions
@@ -78,31 +102,29 @@ func process_collision():
 		var collision = get_slide_collision(collideCount-1)
 		var collider = collision.get_collider()
 		
-		# if collider is null don't proceed
-		if(collider == null): return
-		var collideName = collider.name
-		collideName = collideName.replace("@", "").rstrip("0123456789")
+		# parse the collision name to remove the @ symbols and numbers
+		var collideName = parse_collision(collider)
 		
-		# parse collider name
+		# match the collision with a known collider
 		match collideName:
 			"Enemy":
-				if(iFrame.is_stopped()):
-					health -= collider.damage
-					score -= (collider.value * .5)
-					score = clamp(score, 0, 999999999)
-					iFrame.start()
-					hurt.play()
+				process_damage(collider.damage, collider.value)
 					
 func game_over():
 	var highscore = 0
-	if FileAccess.file_exists(save_path):
-		var file = FileAccess.open(save_path, FileAccess.READ)
+	var prevScore = score
+	
+	if FileAccess.file_exists(highscore_path):
+		var file = FileAccess.open(highscore_path, FileAccess.READ)
 		highscore = file.get_var()
 	
 	if(highscore < score): highscore = score
 	
-	var file = FileAccess.open(save_path, FileAccess.WRITE)
-	file.store_var(highscore)
+	var highFile = FileAccess.open(highscore_path, FileAccess.WRITE)
+	var scoreFile = FileAccess.open(score_path, FileAccess.WRITE)
+	highFile.store_var(highscore)
+	scoreFile.store_var(score)
+	
 	#var savegame = File.new()
 	#var same_path = "res://savegame.save"
 	get_tree().change_scene_to_file("res://GameOver/GameOver.tscn")	

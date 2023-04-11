@@ -36,6 +36,8 @@ transform = Transform3D(1, 0, 0, 0, 0.950943, 0.309366, 0, -0.309366, 0.950943, 
 
 [node name="Player" parent="." instance=ExtResource("1_rngpn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.923919, 0)
+collision_layer = 0
+collision_mask = 0
 script = null
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -85,8 +87,17 @@ text = "Quit"
 script = ExtResource("2_6gi7u")
 
 [node name="HighScore" type="Label" parent="Camera3D"]
-offset_right = 86.0
-offset_bottom = 26.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -43.0
+offset_top = -64.0
+offset_right = 43.0
+offset_bottom = -38.0
+grow_horizontal = 2
+grow_vertical = 0
 text = "Highscore: "
 script = ExtResource("3_2u0lo")
 

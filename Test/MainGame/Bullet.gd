@@ -33,6 +33,13 @@ func _ready():
 	get_tree().get_root().add_child(t)
 	t.start()
 	
+func parse_collision(collider):
+	if(collider == null): return
+	var collideName = collider.name
+	collideName = collideName.replace("@", "").rstrip("0123456789")
+	return collideName
+	
+	
 # processes the collisions
 # if the bullet collides with a wall, it should just disappear
 func process_collision():
@@ -41,30 +48,18 @@ func process_collision():
 	if collideCount >= 1:
 		var collision = get_slide_collision(collideCount-1)
 		var collider = collision.get_collider()
-		
-		if(collider == null): return
-		var collideName = collider.name
-		collideName = collideName.replace("@", "").rstrip("0123456789")
+		var collideName = parse_collision(collider)
 		
 		if(collideName.contains("Wall")): queue_free()
 		if(source != collideName):
 			match collideName:
 				"Player":
-					if(collider.iFrame.is_stopped()):
-						collider.health -= self.damage
-						collider.score -= (source.value * .5)
-						collider.score = clamp(collider.score, 0, 999999999)
-						
-						collider.hit.play()
-						collider.hurt.play()
-						collider.iFrame.start()
-						queue_free()
+					collider.process_damage(self.damage, origin.value)
+					queue_free()
 				"Enemy":
-					collider.health -= self.damage
-					collider.hit.play()
-					if(collider.health <= 0): 
-						origin.score += collider.value
-						origin.score = clamp(origin.score, 0, 999999999)
+					collider.process_damage(self.damage)
+					if(collider.health <= 0):
+						origin.update_score(collider.value)
 					queue_free()
 
 

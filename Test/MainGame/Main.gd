@@ -6,10 +6,13 @@ var enemyTypes = {
 	Color.BLUE : [3, 2, 3, 100, false], 
 	Color.GREEN : [2, 3, 2, 150, false], 
 	Color.PURPLE : [4, 1, 4, 200, true],
-	Color.BLACK : [6, 0, 3, 250, true]
-	#Color.BROWN :[]
+	Color.GRAY : [6, 0, 3, 250, true]
 }
-var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.BLACK]
+var bossTypes = {
+	Color.BLACK : [20, 0, 3, 500, true]
+}
+var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.GRAY]
+var bossColors = [Color.BLACK]
 var game_music = ["res://MainGame/Music/Track1-InGame.mp3"]
 
 var powerUps = []
@@ -32,16 +35,16 @@ func _ready():
 	player = get_node("Player")
 	spawnWave()
 
-func spawnWave():
+func normal_wave():
 	for n in range(wave*4):
 		var enemyVariety = rng.randf_range(0, wave)
 		enemyVariety = clamp(enemyVariety, 0, enemyColors.size()-1)
-		var enemy_x = rng.randf_range(-27, 27)
-		var enemy_z = rng.randf_range(-20, 20)
+		var enemy_x = rng.randf_range(-25, 25)
+		var enemy_z = rng.randf_range(-18, 18)
 		
 		while(pow((enemy_x - player.position.x), 2) + pow((enemy_z - player.position.z), 2) < pow(10, 2)):
-			enemy_x = rng.randf_range(-27, 27)
-			enemy_z = rng.randf_range(-20, 20) 
+			enemy_x = rng.randf_range(-25, 25)
+			enemy_z = rng.randf_range(-18, 18)
 		
 		var enemyColor = enemyColors[enemyVariety]
 		var enemy = enemyObj.instantiate()
@@ -49,6 +52,33 @@ func spawnWave():
 		enemy.init(enemyTypes[enemyColor][0], enemyTypes[enemyColor][1], enemyTypes[enemyColor][2], enemyTypes[enemyColor][3], enemyTypes[enemyColor][4], enemyColor, player)
 		add_child(enemy)
 		enemyCount += 1
+
+func boss_wave():
+	var bossVariety = rng.randf_range(0, wave)
+	bossVariety = clamp(bossVariety, 0, bossColors.size()-1)
+	var enemy_x = rng.randf_range(-27, 27)
+	var enemy_z = rng.randf_range(-20, 20)
+	while(pow((enemy_x - player.position.x), 2) + pow((enemy_z - player.position.z), 2) < pow(5, 2)):
+		enemy_x = rng.randf_range(-27, 27)
+		enemy_z = rng.randf_range(-20, 20)
+	
+	
+	var bossColor = bossColors[bossVariety]
+	var boss = enemyObj.instantiate()
+	boss.position = Vector3(enemy_x, .6, enemy_z)
+	bossTypes[bossColor][0] = clamp(wave * 2, 0, 50);
+	
+	boss.init(bossTypes[bossColor][0],bossTypes[bossColor][1], bossTypes[bossColor][2], bossTypes[bossColor][3], bossTypes[bossColor][4], bossColor, player)
+	boss.scale *= 5
+	boss.position.y += .6
+	add_child(boss)
+	enemyCount += 1
+	
+func spawnWave():
+	if(wave % 10 != 0):
+		normal_wave()
+	else:
+		boss_wave()
 		
 func _input(event):
 	if event.is_action_pressed("pause"):
