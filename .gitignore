@@ -1,6 +1,6 @@
 
 *.exe
-Executable/CircleGuy2.pck
+*/Executable
 Test/export_presets.cfg
 Test/MainScene/Executable/CircleGuy2.pck
 Executable/CircleGuy2.zip
@@ -11,3 +11,4 @@ Test/android/build/.gdignore
 *.bat
 Test/android/build/gradlew
 *.java
+*.zip
