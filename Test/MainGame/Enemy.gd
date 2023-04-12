@@ -56,8 +56,8 @@ func process_shoot():
 		var bullet = bulletObj.instantiate()
 		
 		# place the bullet at the correct starting position
-		var tempFix = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
-		bullet.init(self, self.position, tempFix, 3, damage)
+		var enemy_to_target = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
+		bullet.init(self, self.position, enemy_to_target, 3, damage)
 		bullet.set_collision_layer(2)
 		bullet.set_collision_mask(1)
 		
