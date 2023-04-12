@@ -55,9 +55,8 @@ func process_shoot():
 		
 		#initialize bullet, add to tree, start shoot cooldown
 		bullet.init(self ,self.position, shoot_input, bullet_speed, damage)
+		bullet.set_collision_mask(2)
 		
-		bullet.set_collision_layer(6)
-		bullet.set_collision_mask(3)
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
 		

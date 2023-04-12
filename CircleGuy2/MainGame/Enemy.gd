@@ -45,8 +45,6 @@ func init(hp, spd, dmg, val, shoot, heal, color, player):
 	material.albedo_color = color
 	
 func _ready():
-	set_collision_layer(3)
-	set_collision_mask(1)
 
 	hit = get_node("EnemyHit")
 	bulletObj = preload("res://MainGame/Bullet.tscn")
@@ -80,7 +78,6 @@ func process_shoot():
 		# place the bullet at the correct starting position
 		var enemy_to_target = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
 		bullet.init(self, self.position, enemy_to_target, 3, damage)
-		bullet.set_collision_layer(2)
 		bullet.set_collision_mask(1)
 		
 		get_tree().get_root().add_child(bullet)

@@ -14,6 +14,7 @@ material = SubResource("StandardMaterial3D_yx2pf")
 [node name="Bullet" type="CharacterBody3D"]
 process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000124931, 0.00305939, -0.00174081)
+collision_layer = 4
 script = ExtResource("1_jqnhn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
