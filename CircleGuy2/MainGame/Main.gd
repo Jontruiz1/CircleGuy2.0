@@ -1,22 +1,24 @@
 extends Node3D
 
-# health, speed, damage, shoot
+# health, speed, damage, can shoot, can heal
 var enemyTypes = {
-		Color.RED : [2, 2, 2, 50, false], 
-		Color.BLUE : [3, 2, 3, 100, false], 
-		Color.GREEN : [2, 3, 2, 150, false], 
-		Color.PURPLE : [4, 1, 4, 200, true],
-		Color.GRAY : [6, 0, 3, 250, true]
+		Color.RED : [2, 2, 2, 50, false, false], 
+		Color.BLUE : [3, 2, 3, 100, false, false], 
+		Color.GREEN : [2, 3, 2, 150, false, false], 
+		Color.PURPLE : [4, 1, 4, 200, true, false],
+		Color.GRAY : [6, 0, 3, 250, true, false]
 }
 var bossTypes = {
-		Color.BLACK : [20, 0, 3, 500, true]
+		Color.BLACK : [20, 0, 3, 500, true, false],
+		Color.PINK : [10, 2, 2, 700, true, true]
 }
 var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.GRAY]
-var bossColors = [Color.BLACK]
+var bossColors = [Color.BLACK, Color.PINK]
 var game_music = ["res://MainGame/Music/Track1-InGame.mp3"]
-var power_ups = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE]
+var power_normal = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE]
+var power_boss = [Color.BLACK, Color.PINK]
 
-var wave = 1
+var wave = 10
 var enemyCount = 0
 var power_up_count = 0
 
@@ -24,22 +26,24 @@ var power_up_obj = null
 var enemy_obj = null
 var player = null
 
-
 var pause_menu = null
 var rng = null
 var camera = null
 var music_player = null
 
+var generated = false
+
 func generate_rand_pos():
-	var enemy_x = rng.randf_range(-25, 25)
-	var enemy_z = rng.randf_range(-18, 18)
-	while(pow((enemy_x - player.position.x), 2) + pow((enemy_z - player.position.z), 2) < pow(10, 2)):
-		enemy_x = rng.randf_range(-25, 25)
-		enemy_z = rng.randf_range(-18, 18)
-	return [ enemy_x, enemy_z ]
+	var x_coord = rng.randf_range(-25, 25)
+	var z_coord = rng.randf_range(-18, 18)
+	while(pow((x_coord - player.position.x), 2) + pow((z_coord - player.position.z), 2) < pow(10, 2)):
+		x_coord = rng.randf_range(-25, 25)
+		z_coord = rng.randf_range(-18, 18)
+	return [ x_coord, z_coord ]
 	
 func generate_color(colors):
 	var variety = clamp(rng.randf_range(0, wave), 0, colors.size()-1)
+	print(variety)
 	var color = colors[variety]
 	return color
 
@@ -78,7 +82,9 @@ func normal_wave():
 			enemyTypes[enemy_color][2], 
 			enemyTypes[enemy_color][3], 
 			enemyTypes[enemy_color][4], 
-			enemy_color, player)
+			enemyTypes[enemy_color][5],
+			enemy_color, 
+			player)
 		enemy.set_collision_layer(2)
 		add_child(enemy)
 		
@@ -87,7 +93,6 @@ func normal_wave():
 func boss_wave():
 	# probably can be made into another function 	
 	var boss_color = generate_color(bossColors)
-	
 	var pos = generate_rand_pos()
 	
 	# instantiate and position boss
@@ -99,7 +104,9 @@ func boss_wave():
 		bossTypes[boss_color][2], 
 		bossTypes[boss_color][3], 
 		bossTypes[boss_color][4], 
-		boss_color, player)
+		bossTypes[boss_color][5],
+		boss_color, 
+		player)
 	bossTypes[boss_color][0] = clamp(wave * 2, 0, 50);
 	boss.set_collision_layer(2)
 	
@@ -111,8 +118,15 @@ func boss_wave():
 	enemyCount += 1
 
 func spawn_power_up():
-	power_up_obj.instantiate()
-		
+	var power_up = power_up_obj.instantiate()
+	var power_pos = generate_rand_pos()
+	power_up.position = Vector3(power_pos[0], .6, power_pos[1])
+	
+	var color = generate_color(power_normal)
+	power_up.init( color)
+	add_child(power_up)
+	
+	generated = true
 
 func spawn_wave():
 	if(wave % 10 != 0):
@@ -137,7 +151,9 @@ func change_music():
 
 func _process(_delta):
 	if(not music_player.playing): change_music()
-	if(power_up_count <= 0 and wave % 3 == 0): spawn_power_up()
+	if(not generated and wave % 3 == 0): spawn_power_up()
+	
 	if(enemyCount == 0):
 		wave += 1
+		generated = false
 		spawn_wave()

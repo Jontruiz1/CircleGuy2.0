@@ -8,7 +8,8 @@ var colorMatches = {
 	Color.GREEN : "Green", 
 	Color.PURPLE : "Purple", 
 	Color.GRAY : "Gray",
-	Color.BLACK : "Black"
+	Color.BLACK : "Black",
+	Color.PINK : "Pink"
 }
 
 var bulletObj = null
@@ -16,17 +17,26 @@ var health = null
 var speed = null
 var damage = null
 var can_shoot = null
+var can_heal = null
 var type = null
 var target = null
 var value = null
 var hit = null
+var heal = null
+var maxHealth = null
 
-func init(hp, spd, dmg, val, shoot, color, player):
+func replenish():
+	health = clamp(health+1, 0, maxHealth) 
+	heal.start()
+
+func init(hp, spd, dmg, val, shoot, heal, color, player):
 	health = hp
+	maxHealth = health
 	speed = spd
 	damage = dmg
 	type = color
 	can_shoot = shoot
+	can_heal = heal
 	target = player
 	value = val
 	
@@ -34,20 +44,32 @@ func init(hp, spd, dmg, val, shoot, color, player):
 	var material = get_node("MeshInstance3D").get_active_material(0)
 	material.albedo_color = color
 	
-	match colorMatches[type]:
-		&"Purple":
-			shoot_cooldown.wait_time = 2
-		&"Black":
-			shoot_cooldown.wait_time = .5
-	shoot_cooldown.one_shot = true
-	add_child(shoot_cooldown)
-
 func _ready():
 	set_collision_layer(3)
 	set_collision_mask(1)
 
 	hit = get_node("EnemyHit")
 	bulletObj = preload("res://MainGame/Bullet.tscn")
+	
+	if(can_heal): 
+		print("here")
+		heal = Timer.new()
+		heal.one_shot = true
+		heal.wait_time = 2
+		heal.timeout.connect(func() : replenish())
+		add_child(heal)
+		heal.start()
+		
+	if(can_shoot):
+		match colorMatches[type]:
+			&"Purple":
+				shoot_cooldown.wait_time = 2
+			&"Black":
+				shoot_cooldown.wait_time = .5
+			&"Pink":
+				shoot_cooldown.wait_time = 1
+		shoot_cooldown.one_shot = true
+		add_child(shoot_cooldown)
 
 # process the shooting if possible
 func process_shoot():
@@ -74,6 +96,7 @@ func process_damage(damage):
 	hit.play()
 		
 func _physics_process(delta):
+	print(health)
 	if health <= 0: 
 		get_tree().get_root().get_node("GameManager").enemyCount -= 1
 		self.queue_free()

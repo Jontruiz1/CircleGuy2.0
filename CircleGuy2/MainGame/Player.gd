@@ -1,17 +1,20 @@
 class_name Player
 extends CharacterBody3D
 
+var shoot_cooldown = Timer.new()
+var iFrame = Timer.new()
+var heal_cooldown = null
 
 var speed = 5.5
 var bullet_speed = 5
-var shoot_cooldown = Timer.new()
-var iFrame = Timer.new()
 var health = 6
 var maxHealth = 6
 var damage = 1
 var score = 0
+
 var highscore_path = "user://score.save"
 var score_path = "user://currscore.save"
+
 var hurt = null
 var shotSound = null
 var hit = null
@@ -22,9 +25,6 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	# player on layer 1, look for collisions on layer 3
-	set_collision_layer(1)
-	set_collision_mask(3)
-	
 	bulletObj = preload("res://MainGame/Bullet.tscn")
 	
 	shotSound = get_node("ShootNoise")
@@ -56,7 +56,7 @@ func process_shoot():
 		#initialize bullet, add to tree, start shoot cooldown
 		bullet.init(self ,self.position, shoot_input, bullet_speed, damage)
 		
-		bullet.set_collision_layer(2)
+		bullet.set_collision_layer(6)
 		bullet.set_collision_mask(3)
 		get_tree().get_root().add_child(bullet)
 		shoot_cooldown.start()
@@ -109,14 +109,36 @@ func process_collision():
 		# parse the collision name to remove the @ symbols and numbers
 		var collideName = parse_collision(collider)
 		
+		
 		# match the collision with a known collider
 		match collideName:
 			"Enemy":
 				process_damage(collider.damage, collider.value)
 			"PowerRed":
-				print("help")
-			
-					
+				maxHealth = clamp(maxHealth+1, 3, 15)
+				health = clamp(health+1, 3, maxHealth)
+				collider.queue_free()
+			"PowerBlue":
+				shoot_cooldown.wait_time = clamp(shoot_cooldown.wait_time-.05, .2, .5)
+				collider.queue_free()
+			"PowerGreen":
+				speed = clamp(speed+.2, 3, 8)
+				collider.queue_free()
+			"PowerPurple":
+				damage = clamp(damage+.5, 1, 5)
+				collider.queue_free()
+			"PowerPink":
+				if(heal_cooldown == null):
+					heal_cooldown = Timer.new()
+					heal_cooldown.wait_time = 7
+					heal_cooldown.timeout.connect(
+							func() : 
+								health = clamp(health+1, 3, maxHealth)
+								heal_cooldown.start())
+					add_child(heal_cooldown)
+					heal_cooldown.start()
+				else:
+					heal_cooldown.wait_time = clamp(heal_cooldown.wait_time - .2, 4, 7)
 func game_over():
 	var highscore = 0
 	var prevScore = score

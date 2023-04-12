@@ -5,14 +5,20 @@ var color_matches = {
 	Color.RED : "Red", 
 	Color.BLUE : "Blue", 
 	Color.GREEN : "Green", 
-	Color.PURPLE : "Purple"
+	Color.PURPLE : "Purple",
+	Color.BLACK : "Black",
+	Color.PINK : "Pink"
 }
-var type = null
 
-func init(color):
+var type = null
+var game_manager = null
+
+func init( color):
 	type = color
+	set_collision_layer(4)
+	set_collision_mask(1)
 
 func _ready():
-	var material = get_node("MeshInstance3D").get_active_material(0)
+	var material = get_child(0).get_active_material(0)
 	material.albedo_color = type
 	self.name = "Power" + color_matches[type]
