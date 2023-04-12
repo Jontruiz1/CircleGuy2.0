@@ -10,5 +10,6 @@ A recreation of a 2D wave based shooter that was made for a 2D game design class
 4. Make sure the .pck file is in the same directory as the .exe
 
 ## Controls
-*WASD* - Move CircleGuy around
+*WASD* - Move CircleGuy around  
+
 *ARROW KEYS/NMPAD8, 4, 6, 2* - Shoot in all directions. Combine inputs to shoot diagonally.
