@@ -12,3 +12,5 @@ Test/android/build/.gdignore
 Test/android/build/gradlew
 *.java
 *.zip
+*.jar
+*.aar

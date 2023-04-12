@@ -1,0 +1,144 @@
+[gd_scene load_steps=11 format=3 uid="uid://bdv2ykf02r4cj"]
+
+[ext_resource type="Script" path="res://GameOver/GameOver.gd" id="1_xk0vl"]
+[ext_resource type="PackedScene" uid="uid://dtj58xwkgmti8" path="res://MainGame/Player.tscn" id="2_cicwl"]
+[ext_resource type="Script" path="res://MainMenu/PlayBtn.gd" id="3_yelox"]
+[ext_resource type="Script" path="res://MainMenu/HighScore.gd" id="4_vgyag"]
+[ext_resource type="PackedScene" uid="uid://ctyndqylo8n5n" path="res://MainGame/SideWalls.tscn" id="5_dkjif"]
+[ext_resource type="PackedScene" uid="uid://do6yti2hwvnnn" path="res://MainGame/TopWall.tscn" id="6_mwrj8"]
+[ext_resource type="PackedScene" uid="uid://db2nahwxf71gx" path="res://MainGame/CameraWall.tscn" id="7_bqvr2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rl20v"]
+size = Vector3(54.4673, 0.535465, 39.7773)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2oc3"]
+albedo_color = Color(0.666667, 0.6, 0.501961, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b8n83"]
+material = SubResource("StandardMaterial3D_i2oc3")
+size = Vector3(2.6, 1, 1.9)
+
+[node name="GameOverManager" type="Node3D"]
+script = ExtResource("1_xk0vl")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.138974, -0.149954, 0)
+shape = SubResource("BoxShape3D_rl20v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(21, 0, 0, 0, 0.525, 0, 0, 0, 21, -0.239724, 0, -0.0383506)
+mesh = SubResource("BoxMesh_b8n83")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.950943, 0.309366, 0, -0.309366, 0.950943, 0, 2.55679, 6.62779)
+
+[node name="Player" parent="." instance=ExtResource("2_cicwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.923919, 0)
+script = null
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.644377, 0.764708, 0, -0.764708, 0.644377, 0, 8.42707, 9.745)
+fov = 118.782
+
+[node name="Title" type="RichTextLabel" parent="Camera3D"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_top = 192.0
+offset_right = 68.0
+offset_bottom = 232.0
+grow_horizontal = 2
+text = "Game Over!"
+
+[node name="17516" type="VScrollBar" parent="Camera3D/Title"]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="17004" type="VScrollBar" parent="Camera3D/Title"]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+max_value = 23.0
+step = 1.0
+page = 23.0
+
+[node name="MainMenuBtn" type="Button" parent="Camera3D"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 360.0
+offset_top = 72.5
+offset_right = 456.0
+offset_bottom = 103.5
+grow_vertical = 2
+text = "Main Menu
+"
+script = ExtResource("3_yelox")
+
+[node name="QuitBtn" type="Button" parent="Camera3D"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -474.0
+offset_top = 72.5
+offset_right = -432.0
+offset_bottom = 103.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Quit"
+script = ExtResource("3_yelox")
+
+[node name="CurrentScore" type="Label" parent="Camera3D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = -77.0
+offset_right = 43.0
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Highscore: "
+script = ExtResource("4_vgyag")
+
+[node name="PlayAgainBtn" type="Button" parent="Camera3D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -15.5
+offset_right = 39.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play again?"
+script = ExtResource("3_yelox")
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="LeftWall" parent="Walls" instance=ExtResource("5_dkjif")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6152, 1.67972, -0.00639725)
+
+[node name="RightWall" parent="Walls" instance=ExtResource("5_dkjif")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.4889, 1.77746, 0.225409)
+
+[node name="TopWall" parent="Walls" instance=ExtResource("6_mwrj8")]
+transform = Transform3D(-0.0105996, 0.00350129, -0.999938, -0.000173536, 0.999994, 0.00350332, 0.999944, 0.000210642, -0.0105989, 0.000101089, 9.20852, -20.0591)
+
+[node name="CameraWall" parent="Walls" instance=ExtResource("7_bqvr2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 5.81705, 19.6101)
+
+[node name="GameOverMusic" type="AudioStreamPlayer" parent="."]
