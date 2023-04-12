@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dld4xe0qpr5hy"]
+
+[ext_resource type="Script" path="res://MainGame/PowerUp.gd" id="1_4qtne"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2f0ti"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h76ty"]
+
+[node name="PowerUp" type="StaticBody3D"]
+script = ExtResource("1_4qtne")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_2f0ti")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_h76ty")
