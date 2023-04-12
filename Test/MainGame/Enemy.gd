@@ -20,7 +20,6 @@ var type = null
 var target = null
 var value = null
 var hit = null
-var node = null
 
 func init(hp, spd, dmg, val, shoot, color, player):
 	health = hp
@@ -47,7 +46,6 @@ func _ready():
 	set_collision_layer(3)
 	set_collision_mask(1)
 
-	node = get_node("Sprite3D")
 	hit = get_node("EnemyHit")
 	bulletObj = preload("res://MainGame/Bullet.tscn")
 
@@ -76,7 +74,6 @@ func process_damage(damage):
 	hit.play()
 		
 func _physics_process(delta):
-	node.position = Vector3(self.position.x, self.position.y+5, self.position.z)
 	if health <= 0: 
 		get_tree().get_root().get_node("GameManager").enemyCount -= 1
 		self.queue_free()

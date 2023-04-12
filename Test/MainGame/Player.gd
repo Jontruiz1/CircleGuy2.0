@@ -113,6 +113,9 @@ func process_collision():
 		match collideName:
 			"Enemy":
 				process_damage(collider.damage, collider.value)
+			"PowerRed":
+				print("help")
+			
 					
 func game_over():
 	var highscore = 0

@@ -26,9 +26,3 @@ shape = SubResource("SphereShape3D_f2sau")
 
 [node name="EnemyHit" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_gjtap")
-
-[node name="Sprite3D" type="Sprite3D" parent="."]
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Sprite3D"]
-offset_right = 788.0
-offset_bottom = 40.0
