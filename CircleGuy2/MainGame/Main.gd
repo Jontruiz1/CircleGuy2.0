@@ -18,7 +18,7 @@ var game_music = ["res://MainGame/Music/Track1-InGame.mp3"]
 var power_normal = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE]
 var power_boss = [Color.BLACK, Color.PINK]
 
-var wave = 10
+var wave = 1
 var enemyCount = 0
 var power_up_count = 0
 
@@ -129,7 +129,7 @@ func spawn_power_up():
 	generated = true
 
 func spawn_wave():
-	if(wave % 10 != 0):
+	if(wave % 5 != 0):
 		normal_wave()
 	else:
 		boss_wave()

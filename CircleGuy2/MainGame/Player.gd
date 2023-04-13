@@ -108,7 +108,6 @@ func process_collision():
 		# parse the collision name to remove the @ symbols and numbers
 		var collideName = parse_collision(collider)
 		
-		
 		# match the collision with a known collider
 		match collideName:
 			"Enemy":
@@ -116,28 +115,29 @@ func process_collision():
 			"PowerRed":
 				maxHealth = clamp(maxHealth+1, 3, 15)
 				health = clamp(health+1, 3, maxHealth)
-				collider.queue_free()
+				collider.display()
 			"PowerBlue":
 				shoot_cooldown.wait_time = clamp(shoot_cooldown.wait_time-.05, .2, .5)
-				collider.queue_free()
+				collider.display()
 			"PowerGreen":
 				speed = clamp(speed+.2, 3, 8)
-				collider.queue_free()
+				collider.display()
 			"PowerPurple":
 				damage = clamp(damage+.5, 1, 5)
-				collider.queue_free()
+				collider.display()
 			"PowerPink":
 				if(heal_cooldown == null):
 					heal_cooldown = Timer.new()
 					heal_cooldown.wait_time = 7
 					heal_cooldown.timeout.connect(
 							func() : 
-								health = clamp(health+1, 3, maxHealth)
+								health = clamp(health+1, 3, maxHealth+1)
 								heal_cooldown.start())
 					add_child(heal_cooldown)
 					heal_cooldown.start()
 				else:
 					heal_cooldown.wait_time = clamp(heal_cooldown.wait_time - .2, 4, 7)
+				collider.display()
 func game_over():
 	var highscore = 0
 	var prevScore = score

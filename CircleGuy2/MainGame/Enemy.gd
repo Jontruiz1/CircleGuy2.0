@@ -24,6 +24,7 @@ var value = null
 var hit = null
 var heal = null
 var maxHealth = null
+var power_up_obj = preload("res://MainGame/PowerUp.tscn")
 
 func replenish():
 	health = clamp(health+1, 0, maxHealth) 
@@ -93,8 +94,15 @@ func process_damage(damage):
 	hit.play()
 		
 func _physics_process(delta):
-	print(health)
+	
+	
 	if health <= 0: 
+		if(type == Color.PINK): 
+			var power_up = power_up_obj.instantiate()
+			power_up.init(type)
+			power_up.position = self.position
+			get_tree().get_root().add_child(power_up)
+			
 		get_tree().get_root().get_node("GameManager").enemyCount -= 1
 		self.queue_free()
 	process_shoot()

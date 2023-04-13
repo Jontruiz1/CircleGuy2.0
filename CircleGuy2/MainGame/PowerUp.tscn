@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dld4xe0qpr5hy"]
+[gd_scene load_steps=6 format=3 uid="uid://dld4xe0qpr5hy"]
 
 [ext_resource type="Script" path="res://MainGame/PowerUp.gd" id="1_4qtne"]
 
@@ -9,6 +9,8 @@ material = SubResource("StandardMaterial3D_slefq")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h76ty"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_ws7bn"]
+
 [node name="PowerUp" type="StaticBody3D"]
 collision_layer = 8
 script = ExtResource("1_4qtne")
@@ -18,3 +20,20 @@ mesh = SubResource("BoxMesh_2f0ti")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_h76ty")
+
+[node name="DisplayText" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -13.0
+offset_right = 28.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Testing
+"
+label_settings = SubResource("LabelSettings_ws7bn")
