@@ -13,5 +13,8 @@ func _button_pressed():
 			get_tree().quit()
 		"MainMenuBtn":
 			get_tree().change_scene_to_file("res://MainMenu/Menu.tscn")
+		"Instructions":
+			var main_screen = get_tree().get_root().get_child(0).get_children()
+			print(main_screen)
 		"PlayAgainBtn":
 			get_tree().change_scene_to_file("res://MainGame/Main.tscn")
