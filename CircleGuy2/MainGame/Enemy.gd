@@ -72,7 +72,6 @@ func _ready():
 
 # process the shooting if possible
 func process_shoot():
-	
 	if can_shoot and shoot_cooldown.is_stopped():
 		var bullet = bulletObj.instantiate()
 		
@@ -80,6 +79,7 @@ func process_shoot():
 		var enemy_to_target = (Vector2(target.position.x - self.position.x, target.position.z - self.position.z)).normalized()
 		bullet.init(self, self.position, enemy_to_target, 3, damage)
 		bullet.set_collision_mask(1)
+		bullet.get_child(0).get_active_material(0).albedo_color = Color.RED
 		
 		get_tree().get_root().add_child(bullet)
 		
@@ -92,18 +92,21 @@ func process_shoot():
 func process_damage(damage):
 	health -= damage
 	hit.play()
-		
-func _physics_process(delta):
-	
-	
-	if health <= 0: 
-		if(type == Color.PINK): 
-			var power_up = power_up_obj.instantiate()
-			power_up.init(type)
-			power_up.position = self.position
-			get_tree().get_root().add_child(power_up)
+
+func process_death():
+	if(type == Color.PINK): 
+		var pinkMat = load("res://CustomPowerUpSpawn.tres")
+		var power_up = power_up_obj.instantiate()
+		pinkMat.albedo_color = Color.PINK
+		power_up.get_child(0).set_surface_override_material(0, pinkMat)
+		power_up.position = self.position
+		power_up.init(Color.PINK)
+		get_tree().get_root().add_child(power_up)
 			
-		get_tree().get_root().get_node("GameManager").enemyCount -= 1
-		self.queue_free()
+	get_tree().get_root().get_node("GameManager").enemyCount -= 1
+	self.queue_free()
+	
+func _physics_process(delta):
+	if health <= 0: process_death()
 	process_shoot()
 	self.position = self.position.move_toward(target.position, delta * speed)
