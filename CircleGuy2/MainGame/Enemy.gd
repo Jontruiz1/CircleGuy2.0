@@ -66,7 +66,9 @@ func _ready():
 			&"Black":
 				shoot_cooldown.wait_time = .5
 			&"Pink":
-				shoot_cooldown.wait_time = 1
+				shoot_cooldown.wait_time = 1.5
+			&"Gray":
+				shoot_cooldown.wait_time = 1.75
 		shoot_cooldown.one_shot = true
 		add_child(shoot_cooldown)
 

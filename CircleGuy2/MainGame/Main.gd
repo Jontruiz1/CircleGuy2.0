@@ -21,6 +21,7 @@ var power_boss = [Color.BLACK, Color.PINK]
 var wave = 1
 var enemyCount = 0
 var power_up_count = 0
+var radius = pow(10, 2)
 
 var power_up_obj = null
 var enemy_obj = null
@@ -36,19 +37,21 @@ var generated = false
 func generate_rand_pos():
 	var x_coord = rng.randf_range(-25, 25)
 	var z_coord = rng.randf_range(-18, 18)
-	while(pow((x_coord - player.position.x), 2) + pow((z_coord - player.position.z), 2) < pow(10, 2)):
+	while(pow((x_coord - player.position.x), 2) + pow((z_coord - player.position.z), 2) < radius):
 		x_coord = rng.randf_range(-25, 25)
 		z_coord = rng.randf_range(-18, 18)
 	return [ x_coord, z_coord ]
-	
+
+# generates random color
 func generate_color(colors):
-	var variety = clamp(rng.randf_range(0, wave), 0, colors.size()-1)
-	print(variety)
+	var wave_capped = clamp(wave, 0, colors.size())
+	var variety = clamp(rng.randf_range(0, wave_capped), 0, colors.size()-1)
 	var color = colors[variety]
 	return color
 
 # Called when the node enters the scene tree or the first time.
 func _ready():
+	
 	# loading nodes to be used later
 	enemy_obj = preload("res://MainGame/Enemy.tscn")
 	power_up_obj = preload("res://MainGame/PowerUp.tscn")
@@ -85,7 +88,6 @@ func normal_wave():
 			enemyTypes[enemy_color][5],
 			enemy_color, 
 			player)
-		enemy.set_collision_layer(2)
 		add_child(enemy)
 		
 		enemyCount += 1
@@ -151,7 +153,7 @@ func change_music():
 
 func _process(_delta):
 	if(not music_player.playing): change_music()
-	if(not generated and wave % 3 == 0): spawn_power_up()
+	if(not generated and wave % 2 == 0): spawn_power_up()
 	
 	if(enemyCount == 0):
 		wave += 1
