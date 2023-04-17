@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ba82tbbjjlqar"]
+[gd_scene load_steps=12 format=3 uid="uid://b0wm0y0ilp8a3"]
 
 [ext_resource type="Script" path="res://MainMenu/Menu.gd" id="1_miexp"]
 [ext_resource type="PackedScene" uid="uid://dtj58xwkgmti8" path="res://MainGame/Player.tscn" id="1_rngpn"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ctyndqylo8n5n" path="res://MainGame/SideWalls.tscn" id="4_t3mpl"]
 [ext_resource type="PackedScene" uid="uid://do6yti2hwvnnn" path="res://MainGame/TopWall.tscn" id="5_68jtv"]
 [ext_resource type="PackedScene" uid="uid://db2nahwxf71gx" path="res://MainGame/CameraWall.tscn" id="6_wujh7"]
+[ext_resource type="PackedScene" uid="uid://b26uw6xnvidiy" path="res://up_with_rotation.tscn" id="8_wo2cb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rl20v"]
 size = Vector3(54.4673, 0.535465, 39.7773)
@@ -130,3 +131,6 @@ transform = Transform3D(-0.0105996, 0.00350129, -0.999938, -0.000173536, 0.99999
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 5.81705, 19.6101)
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+
+[node name="up_withRotation" parent="." instance=ExtResource("8_wo2cb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.87405, 3.19002, 0)
