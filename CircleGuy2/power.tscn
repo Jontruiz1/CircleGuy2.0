@@ -1,6 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dld4xe0qpr5hy"]
-
-[ext_resource type="Script" path="res://MainGame/PowerUp.gd" id="1_4qtne"]
+[gd_scene load_steps=6 format=3 uid="uid://bavau30cgxyu7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtd6c"]
 resource_name = "Material"
@@ -25,7 +23,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_hmnph"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_27w4d"]
 resource_name = "up_withRotation_Plane"
 _surfaces = [{
 "aabb": AABB(-2, -0.5, -2, 4, 1, 4.00001),
@@ -43,35 +41,30 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_skgjh")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_h76ty"]
+[sub_resource type="Animation" id="Animation_rtsec"]
+resource_name = "Rotation"
+loop_mode = 1
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PowerUP")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.689465, -0.156966, 0.156966, 0.689465, 0.2, 1, 0.689465, -0.156966, 0.156966, 0.689465)
 
-[sub_resource type="LabelSettings" id="LabelSettings_ws7bn"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_slscw"]
+_data = {
+"Rotation": SubResource("Animation_rtsec")
+}
 
-[node name="PowerUp" type="StaticBody3D"]
-collision_layer = 8
-script = ExtResource("1_4qtne")
+[node name="PowerUp" type="Node3D"]
 
 [node name="PowerUP" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.6, 0)
-mesh = SubResource("ArrayMesh_hmnph")
+transform = Transform3D(0.706326, -0.707886, 3.09427e-08, -8.40679e-16, -4.37114e-08, -1, 0.707886, 0.706326, -3.08745e-08, 0, 0, 0)
+mesh = SubResource("ArrayMesh_27w4d")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_h76ty")
-
-[node name="DisplayText" type="Label" parent="."]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -28.0
-offset_top = -13.0
-offset_right = 28.0
-offset_bottom = 13.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Testing
-"
-label_settings = SubResource("LabelSettings_ws7bn")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_slscw")
+}

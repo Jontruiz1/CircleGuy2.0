@@ -14,13 +14,13 @@ var bossTypes = {
 }
 var enemyColors = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE, Color.GRAY]
 var bossColors = [Color.BLACK, Color.PINK]
-var game_music = ["res://MainGame/Music/Track1-InGame.mp3"]
 var power_normal = [Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE]
 var power_boss = [Color.BLACK, Color.PINK]
 
+var game_music = ["res://MainGame/Music/Track1-InGame.mp3"]
+
 var wave = 1
 var enemyCount = 0
-var power_up_count = 0
 var radius = pow(10, 2)
 
 var power_up_obj = null
@@ -63,6 +63,8 @@ func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.seed = hash(Time.get_time_string_from_system())
 	
+	music_player.finished.connect(func() : change_music())
+	change_music()
 	
 	# spawn initial wave
 	spawn_wave()
@@ -125,7 +127,7 @@ func spawn_power_up():
 	power_up.position = Vector3(power_pos[0], .6, power_pos[1])
 	
 	var color = generate_color(power_normal)
-	power_up.init( color)
+	power_up.init(color)
 	add_child(power_up)
 	
 	generated = true
@@ -152,7 +154,6 @@ func change_music():
 	music_player.play()
 
 func _process(_delta):
-	if(not music_player.playing): change_music()
 	if(not generated and wave % 2 == 0): spawn_power_up()
 	
 	if(enemyCount == 0):

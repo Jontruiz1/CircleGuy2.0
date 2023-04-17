@@ -1,6 +1,6 @@
 extends AnimationPlayer
 
-
-
 func _ready():
-	print(get_method_list())
+	self.autoplay = "0"
+	self.play()
+	get_animation("Rotation").loop_mode = 1

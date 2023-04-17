@@ -9,13 +9,13 @@ func _ready():
 	musicPlayer.stop()
 	rng = RandomNumberGenerator.new()
 	rng.seed = hash(Time.get_time_string_from_system())
+	musicPlayer.finished.connect(func() : change_music())
+	change_music()
 
 func change_music():
 	var songChoice = rng.randf_range(0, menu_music.size()-1)
 	var song = load(menu_music[songChoice])
 	musicPlayer.stream = song
-	musicPlayer.set_volume_db(-20)
+	musicPlayer.set_volume_db(-15)
 	musicPlayer.play()
-
-func _process(delta):
-	if(not musicPlayer.playing): change_music()
+	
