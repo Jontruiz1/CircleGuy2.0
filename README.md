@@ -1,7 +1,7 @@
 ## CircleGuy2
 
 A recreation of a 2D wave based shooter that was made for a 2D game design class.
-## Download instructions:
+## Download instructions(Only works for Windows right now):
 
 1. Download the release .zip file
 2. Extract anywhere you wish you play from
