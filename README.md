@@ -18,3 +18,6 @@ A recreation of a 2D wave based shooter that was made for a 2D game design class
 ## Objectives
 Shoot the other enemy spheres around you as they hunt you down, collect as many points as you can, survive as many waves as you can and collect
 all the power-ups you see to improve your stats.
+
+## Check this game out over on my itch.io page if you'd like to make a donation!
+https://jontc.itch.io/
