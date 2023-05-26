@@ -1,7 +1,6 @@
 ## CircleGuy2
 
 A recreation of a 2D wave based shooter that was made for a 2D game design class.
-
 ## Download instructions:
 
 1. Download the release .zip file
@@ -15,3 +14,7 @@ A recreation of a 2D wave based shooter that was made for a 2D game design class
 **WASD** - Move CircleGuy around  
 
 **ARROW KEYS/NMPAD8, 4, 6, 2** - Shoot in all directions. Combine inputs to shoot diagonally.
+
+## Objectives
+Shoot the other enemy spheres around you as they hunt you down, collect as many points as you can, survive as many waves as you can and collect
+all the power-ups you see to improve your stats.
