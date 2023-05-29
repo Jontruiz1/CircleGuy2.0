@@ -1,6 +1,6 @@
 ## CircleGuy2
 
-A recreation of a 2D wave based shooter that was made for a 2D game design class. Made using Godot's GML 4.0.
+A recreation of a 2D wave based shooter that was made for a 2D game design class. Made using Godot 4.0 and GDScript
 ## Download instructions(Only works for Windows right now):
 
 1. Download the release .zip file
